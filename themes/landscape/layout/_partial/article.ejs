@@ -1,0 +1,61 @@
+<article id="<%= post.layout %>-<%= post.slug %>" class="article article-type-<%= post.layout %>" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
+    <%- partial('post/category') %>
+  </div>
+  <div class="article-inner">
+    <%- partial('post/gallery') %>
+    <% if (post.link || post.title){ %>
+      <header class="article-header">
+        <%- partial('post/title', {class_name: 'article-title'}) %>
+      </header>
+    <% } %>
+    <div class="article-entry" itemprop="articleBody">
+      <% if (post.excerpt && index){ %>
+        <%- post.excerpt %>
+        <% if (theme.excerpt_link){ %>
+          <p class="article-more-link">
+            <a href="<%- url_for(post.path) %>#more"><%= theme.excerpt_link %></a>
+          </p>
+        <% } %>
+      <% } else { %>
+        <%- post.content %>
+        <% if (post.layout == 'post'){  %>
+          <%- partial('copyright') %>
+          <%- partial('donate') %>
+        <% } %>
+      <% } %>
+    </div>
+    <footer class="article-footer">
+      <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" class="article-share-link"><%= __('share') %></a>
+      <% if (post.comments){ %>
+        <a href="<%- post.permalink %>#disqus_proxy_thread" class="article-comment-link"><%= __('comment') %></a>
+      <% } %>
+      <%- partial('post/tag') %>
+    </footer>
+  </div>
+  <% if (!index){ %>
+    <%- partial('post/nav') %>
+  <% } %>
+</article>
+
+<% if (!index && post.comments){ %>
+  <section id="comments">
+    <div id="disqus_thread"></div>
+    <div id="disqus_proxy_thread"></div>
+  </section>
+  <script>
+    window.disqusProxy = {
+      shortname: 'lewis617s-blog',
+      username: 'lewis617',
+      server: 'disqus-proxy.herokuapp.com',
+      port: 80,
+      adminAvatar: '//ws4.sinaimg.cn/mw690/83900b4egy1fkuw5hqw8vj202s02ygm1.jpg',
+      identifier: '<%- page.path %>',
+    };
+    window.disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.disqusProxy.identifier;
+    };
+  </script>
+<% } %>

@@ -1,0 +1,29 @@
+<!-- 版权声明节点 -->
+<div class="copyright">
+  <div>
+    <strong>本文作者：</strong>
+    <a href="/about/" title="欢迎访问 <%- theme.author %> 的博客">
+      <%- theme.author %>
+    </a>
+  </div>
+  <div>
+    <strong>本文出处：</strong>
+    <a href="/" title="刘一奇的个人博客">
+      刘一奇的个人博客
+    </a>
+  </div>
+  <div>
+    <strong>本文链接：</strong>
+    <a href="<%- url_for(post.permalink) %>" title="<%- post.title %>">
+          <%- post.permalink %>
+        </a>
+  </div>
+  <div>
+    <strong>发布时间：</strong>
+    <%- post.date.format("YYYY年M月D日 - HH时MM分") %>
+  </div>
+  <div>
+    <strong>版权声明： </strong> 本文由
+    <%-theme.author%> 原创，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="license" target="_blank">保留署名-非商业性使用-禁止演绎 4.0-国际许可协议</a> </br>转载请保留以上声明信息！
+  </div>
+</div>
