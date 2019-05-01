@@ -240,7 +240,7 @@ componentWillReceiveProps(nextProps) {
 
 3，点击刷新按钮
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9xsvkukugj20qr089wis.jpg)
+![](/css/images/1556699036558-6.jpg)
 
 
 

@@ -168,7 +168,7 @@ A rx ry x-axis-rotation large-arc-flag sweep-flag x y
 
 效果截图：
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy8a993prj203e032a9t.jpg)
+![](/css/images/1556699036558-8.jpg)
 
 将两种情况封装成获取d属性的函数：
 
@@ -310,7 +310,7 @@ function createPathHead(pathObj, d){
 
 至此，轨迹回放的关键技术点就讲完了，再次欣赏下最终的效果：
 
-![](https://wx1.sinaimg.cn/mw690/83900b4egy1fk1jn3atyng204h04ead8.gif)
+![](/css/images/1556699036558-9.jpg)
 
 完整的demo在这里：
 

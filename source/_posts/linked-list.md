@@ -17,7 +17,7 @@ tags: [数据结构与算法]
 - 在使用分离链接法解决散列表冲突时，我们也会用链表存储位置冲突的元素。
 - 在 JavaScript 这门语言中有两个非常重要的**链**：作用域链和原型链。学习链表对于理解 JavaScript 的这两个特性也非常有帮助。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egy1fcrboyt21qj20ic041q2q)
+![](/css/images/1556699036557-3.jpg)
 
 ## 使用 JavaScript 编写链表类
 

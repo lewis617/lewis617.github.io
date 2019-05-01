@@ -16,18 +16,19 @@ function getFiles(dir, files_) {
   return files_;
 }
 
-const files = getFiles(path.join(__dirname, '../source'));
+const files = getFiles(path.join(__dirname, '../themes'));
 const urls = files.reduce((last, file) => {
-  const curUrls = fs.readFileSync(file, 'utf-8').toString().match(/http(.+).sinaimg.cn(.+)(gif|jpg|png)/g);
+  const curUrls = fs.readFileSync(file, 'utf-8').toString().match(/http(.+).sinaimg.cn(.+)\)/g);
   if (!curUrls) { return last; }
   return [...last, ...curUrls];
-}, []);
+}, []).map(url => url.replace(/\)$/, ''));
 
 const map = {};
 urls.forEach((url, i) => {
-  const ext = url.match(/(gif|jpg|png)/g)[0];
-  download(url.replace('https', 'http'), 'themes/landscape/source/css/images/' + i + '.' + ext, console.log(url, '下载完成'));
-  map[url] = i + '.' + ext;
+  // const ext = url.match(/(gif|jpg|png)/g)[0];
+  const fileName = new Date().getTime() + '-' + i + '.jpg';
+  download(url.replace('https', 'http'), 'themes/landscape/source/css/images/' + fileName , console.log(url, '下载完成'));
+  map[url] = fileName;
 });
 
 files.forEach((file) => {

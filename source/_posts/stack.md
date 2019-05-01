@@ -16,7 +16,7 @@ tags: [数据结构与算法]
 - 二叉树的先中后序非递归遍历都用到了栈。
 - 在生活中，栈可以模拟煤炉与蜂窝煤等场景。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4ely1fcqywbcbrjj20hz08dq2s)
+![](/css/images/1556699036558-7.jpg)
 
 
 ## 用 JavaScript 写一个栈类

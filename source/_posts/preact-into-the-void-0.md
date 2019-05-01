@@ -25,7 +25,7 @@ https://www.youtube.com/watch?v=LY6y3HbDVmg
 
 我写了Preact，这个展示叫“Preact: Into the void 0”，我觉得这么叫很聪明（这哥们太极客了，void(0)是js中返回undefined的最小脚本），这也是这个幻灯片中唯一的一个分号哦。
 
-![](https://ww1.sinaimg.cn/mw690/83900b4egy1fj6o29y7yvj21gk0t8gp1.jpg)
+![](/css/images/1556699036557-4.jpg)
 
 或许你会好奇啥是Preact，这就是Preact。我移除了源代码映射的注释，今天我们主要讲一下这几个圆圈圈中的部分。因为这是Preact的展示，所以我们需要一些紫色，不管那是啥，那都是我们最后要讲的东西。
 

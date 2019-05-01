@@ -16,7 +16,7 @@ tags: [数据结构与算法]
 - 在 JavaScript 事件循环（Event Loop）中有一个事件队列（Task Queue），也是先进先出来处理各种异步事件。
 - 在生活中，队列可以映射排队打饭等先来后到的场景。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4ely1fcr48hfps7j20c40drglj)
+![](/css/images/1556699036557-5.jpg)
 
 ## 用 JavaScript 编写队列类
 
