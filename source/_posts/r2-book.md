@@ -8,7 +8,7 @@ tags: [React, Redux, Babel, Webpack, Node, Universal, 函数式编程, 图书]
 
 <!--more-->
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1fa3f51f6jyj20h00m8jv0.jpg)
+![](/css/images/146.jpg)
 
 ## 关于 React 与 Redux
 

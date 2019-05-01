@@ -47,7 +47,7 @@ js文件不仅可以调用js，还能调用css和html页面，所以毫不夸张
 
 ### 鼓励代码模块化（最大优点）
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3r2e1xj209907zjrt.jpg)
+![](/css/images/172.jpg)
 
 使用requirejs，我们就需要将原来在一个js文件里面写的代码，按照模块解耦分离成多个js文件，然后按照需求调用。这样做的好处很多：
 

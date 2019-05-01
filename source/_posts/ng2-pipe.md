@@ -10,7 +10,7 @@ tags: [Angular2]
 
 ## 例子
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9xnty3er1j20em06st9b.jpg)
+![](/css/images/66.jpg)
 
 这个例子包含两个pipe，~~一个是stateful，一个是stateless~~，是直接复制官方的例子。（最新的官网文档已经将其改为了pure和impure，并移除了面向对象的比喻，个人认为较为准确，请以最新的官网文档为参考！）
 
@@ -142,7 +142,7 @@ export class HeroListComponent {
 
 结果：
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9xntydj8rj20eq03y0t3.jpg)
+![](/css/images/67.jpg)
 
 ### 特性解读
 

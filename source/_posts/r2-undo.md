@@ -12,7 +12,7 @@ tags: [React, Redux]
 
 ## 例子
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9xt46iemmg20q50ks41w.gif)
+![](/css/images/164.gif)
 
 这个例子是个计数器程序，包含计数器、右边的Redux开发工具、还有一个路由（不过只有"/"这一个地址）。
 

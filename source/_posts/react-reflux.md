@@ -10,7 +10,7 @@ tags: [React, Reflux]
 
 ## 例子
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9yh3uabt1g2073049diu.gif)
+![](/css/images/165.gif)
 
 这个例子是非常简单的todo例子，学习语言从helloworld开始，学习框架从todo开始，这是我们码农界的文化传统！
 
@@ -58,7 +58,7 @@ ReactMixin.onClass(Todo, Reflux.connect(store));
 
 看到这里，很多没有接触过Reflux的同学可能已经晕了，我来图解下Reflux的功能流程吧！
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9yh3l0f47j206u05xjrl.jpg)
+![](/css/images/166.jpg)
 
 组件就是用户界面，actions就是组件的动作，store用于执行actions的命令，并返回一个state对象给组件。组件通过state来更新界面。
 
@@ -158,7 +158,7 @@ module.exports = {
 相比较Redux而言，
 
 1.  Reflux没有reducer的概念，取而代之，和action做基友的是store
-2.  Reflux没有把状态的一部分值绑定在组件的props上，而是将状态绑定在组件的state上，我们来看react dev tool的截图![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9yh3lm0fgj203z047748.jpg)
+2.  Reflux没有把状态的一部分值绑定在组件的props上，而是将状态绑定在组件的state上，我们来看react dev tool的截图![](/css/images/167.jpg)
 3.  Reflux可以直接调用action的方法，而Redux必须将方法绑定在组件的props上，或者使用props的dispatch方法来执行actions的方法
 4.  ……
 

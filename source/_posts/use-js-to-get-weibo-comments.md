@@ -49,7 +49,7 @@ console.log(textArray.join('\n'));
 
 1，打开微博页面，比如：<http://www.weibo.com/2207255374/Eqkmf0pL4>
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egy1fl4pa7prsyj20xo0qkq8m.jpg)
+![](/css/images/241.jpg)
 
 我们可以看到一共有三条评论。
 

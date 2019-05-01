@@ -10,7 +10,7 @@ tags: [Angular2]
 
 ## 例子
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9xp4nip4hj20d703gt96.jpg)
+![](/css/images/62.jpg)
 
 这个例子是个老外写的，我将其迁移到ng2 beta版本，想了解迁移的同学可以参考我的做法。
 

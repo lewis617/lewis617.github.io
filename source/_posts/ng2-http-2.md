@@ -10,7 +10,7 @@ tags: [Angular2]
 
 # 例子
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xkroozusj20hl0mwgo5.jpg)
+![](/css/images/65.jpg)
 
 例子的第一个程序，上节课已经讲过了。这节课我们学习第二个程序，从wiki的api中跨域获取数据，可实现300毫秒内中断和选择最近请求等炫酷功能，这些功能都来自于observable！
 

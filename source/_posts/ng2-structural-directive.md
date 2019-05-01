@@ -10,7 +10,7 @@ tags: [Angular2]
 
 ## 例子
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xofl445fj20e30a4t9t.jpg)
+![](/css/images/76.jpg)
 
 例子是我自己改写的，编写一个structural directives，然后通过这个指令实例化和注销组件，在此同时监视组件生命周期。
 
@@ -143,7 +143,7 @@ bootstrap(App, [])
 
 ### 刷新页面：
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9xofnidzrj206l0b9jsf.jpg)
+![](/css/images/77.jpg)
 
   1. `onInit`是在组件第一次`ngOnChanges`时执行
   2. `OnChanges`在`input`和`output`绑定的值变化时候;我们可以看到打印了变化的值。可以替代ng1中的`$watch`;
@@ -154,29 +154,29 @@ bootstrap(App, [])
 
 ### 点击Set 'condition' toTrue按钮，页面上的组件被注销
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xoflcprrj207n036wed.jpg)
+![](/css/images/78.jpg)
 
 console打印：
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9xofkn1oij206f00jjr5.jpg)
+![](/css/images/79.jpg)
 
 ### 点击Set 'condition' to False按钮，页面上的组件重新被实例化：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xofk3dwqj207q022t8q.jpg)
+![](/css/images/80.jpg)
 
 console打印：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xofkozklj206d03laa5.jpg)
+![](/css/images/81.jpg)
 
 打印了一次`Onchanges`、`onInit`、`AfterContentInit`、`AfterViewInit`、`AfterContentChecked`和`AfterViewChecked`，说明组件实例化，只需要触发一轮初始化和变化检查。与刷新页面的五次对比，我们可以知道多余的"变化检查"，可能来源于angualr的启动。
 
 ### 点击click and watch the lifecycle按钮，一秒后页面上的name变为susan：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xofkuv3uj207701p3yk.jpg)
+![](/css/images/82.jpg)
 
 console打印
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xofmbzj1j206m04qjrm.jpg)
+![](/css/images/83.jpg)
 
 先打印一次`AfterContentChecked`和`AfterViewChecked`，一秒后又打印两次。`OnChanges`没有触发。
 

@@ -71,6 +71,6 @@ def hello_world():
 
 结果：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3fdydqj20g408ojsr.jpg)
+![](/css/images/2.jpg)
 
 `json_dumps`可以将dict转为字符串，这样我们用Jinja渲染的对象列表之类的就可以，以字符串的形式打印出来，便于我们在开发环境下监视渲染状态。

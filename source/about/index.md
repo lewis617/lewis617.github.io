@@ -3,7 +3,7 @@ title: 关于我
 date: 2017-10-01 02:14:25
 ---
 
-<img src="https://wx2.sinaimg.cn/mw690/83900b4ely1fk5mzq8ivsj20dw0emna0.jpg" width = "300" alt="" align=center style="border-radius:50%;"/>
+<img src="/css/images/242.jpg" width = "300" alt="" align=center style="border-radius:50%;"/>
 
 刘一奇，90后程序员、吉他手、《React 与 Redux 开发实例精解》作者，先后在中科院计算所、360网络安全研究院学习工作，现就职于阿里巴巴，担任资深前端工程师。业余喜欢写博客、玩乐器、烧菜、练双节棍。
 

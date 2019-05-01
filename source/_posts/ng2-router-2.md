@@ -12,7 +12,7 @@ tags: [Angular2]
 
 例子仍然是上节课的例子：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xjj733w0j20bc0a8dgz.jpg)
+![](/css/images/71.jpg)
 
 上节课，我们讲解了英雄列表，这节课我们讲解危机中心。
 
@@ -106,7 +106,7 @@ this._dialog.confirm('Discard changes?');
 
 弹出一个对话框：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xjj4z6gkj20c8058jrg.jpg)
+![](/css/images/72.jpg)
 
 这里为什么要使用单独的`dialog` 服务呢？为何不直接出发`window.confirm()？`因为路由的生命周期接受 Bool 或者 Promise 对象（ ng1 也是这样哦）。而`window.confirm` 并不返回一个promise对象，我们需要对其进行包装：  
 

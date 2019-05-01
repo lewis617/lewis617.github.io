@@ -44,11 +44,11 @@ app.controller('ctrl_main', function ($scope) {
 
 运行效果：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3pkrm5j20c705caav.jpg)
+![](/css/images/56.jpg)
 
 点击其他人名，也是一样的。
 
-总体思路就是编写指令，通过改变指令的值![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9yh3pdvz6j204800jweb.jpg)，来控制当前元素的收缩展开。
+总体思路就是编写指令，通过改变指令的值![](/css/images/57.jpg)，来控制当前元素的收缩展开。
 
 ===不用Requirejs的同学就可以不往下看了===
 

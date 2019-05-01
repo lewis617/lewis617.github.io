@@ -12,7 +12,7 @@ tags: [Angular, React, Redux]
 
 为了让大家看得舒服，我用最简单的一个demo来展示React+Redux的“弯弯绕”，下面这个程序就是我用React和Redux写的。然而这个程序在Angular中一行js都不用写！！！
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9yh3scyucg20ao01k0u8.gif)
+![](/css/images/54.gif)
 
 ## 展示组件
 
@@ -41,7 +41,7 @@ export default connect(mapStateToProps,action)(App);
 
 没有玩过Redux的同学们可能已经看得有点晕了，Redux的设计是这样的：
 
- ![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9yh3mvr3gj207n05mjrm.jpg)
+ ![](/css/images/55.jpg)
 
 state就是数据，组件就是数据的呈现形式，action是动作，action是通过reducer来更新state的。
 

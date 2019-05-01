@@ -12,7 +12,7 @@ tags: [Puppeteer, 测试, 端对端测试, e2e]
 
 还记得上篇博客中的端对端测试的动图演示吗？
 
-![](https://wx2.sinaimg.cn/large/83900b4egy1fm5wgcwvylg20af0jn7wh.gif)
+![](/css/images/3.gif)
 
 想实现这个效果，就需要将 Puppeteer 的 `headless` 选项设为 `false`，并将 `slowMo` 设为 20-100 中的某个值，前者使得所有浏览器自动化操作可见，后者控制了动作之间的间隔，使其变慢，从而通过人眼可以看清每步操作。示例代码：
 
@@ -186,7 +186,7 @@ test('expect main-nav-link is 主页,归档,关于我', async () => {
 
 效果图：
 
-![](https://wx1.sinaimg.cn/large/83900b4egy1fm5zpm2qleg20o10jnqn5.gif)
+![](/css/images/1.gif)
 
 至此，端对端测试中常用的 Puppeteer 操作总结就讲完了。有更多操作请查阅官网文档，或给我发邮件，或在本文下方评论。
 

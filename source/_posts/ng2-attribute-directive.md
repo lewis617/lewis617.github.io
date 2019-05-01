@@ -10,7 +10,7 @@ tags: [Angular2]
 
 ## 例子
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xosknpxcj206d05odg4.jpg)
+![](/css/images/61.jpg)
 
 这个例子共两个指令，第一个是redify指令，能使元素的color属性变红。另外一个直接复制官网的highlight指令，但是我自己做了很多变化，来讲解写法的多样化。
 

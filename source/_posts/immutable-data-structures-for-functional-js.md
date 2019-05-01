@@ -8,7 +8,7 @@ tags: [技术讲座, 函数式编程, 不可变数据结构, 数据结构与算�
 
 https://www.youtube.com/watch?v=Wo0qiGPSV-s
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks91iprbej20hs0a07be.jpg)
+![](/css/images/8.jpg)
 
 <!--more-->
 
@@ -20,20 +20,20 @@ https://www.youtube.com/watch?v=Wo0qiGPSV-s
 
 简单介绍一下我吧，我可能是这个屋里唯一的非 web 开发者。我是 Uber Research 的一个工程师。我和同事一起为科研资金领域的数据开发一种自定义查询语言。我也曾是 Recurse Center 的一个成员，Recurse Center 是纽约的一个很棒的编程社区。我也曾是 Outreach 项目的一个成员，如果你没听过 Outreach，（那么我可以告诉你）这个项目（做的事情是）通过给一些女性和亲属一些 Mozilla 的实习机会，来让他们参与到开源项目中来。所以，如果你想在讲座后找我聊这些事，我会很愿意。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks937eocbj20hs0a0n4b.jpg)
+![](/css/images/9.jpg)
 
 
 ## 函数式编程与纯函数
 
 你们或许知道我很喜欢函数式编程，我认为它很赞。有其他人同意我的想法嘛？（观众开始呼应）其他编程范式比如命令式或面向对象编程都会有一些令人头疼的缺点，而函数式编程则是避开这些缺点的较好方式。在函数式编程中，我们通常做的就是把我们的程序设想为一系列纯函数。这意味着，它们（指的是一系列纯函数）只是把输入转换为输出，这就是它们所做的所有事了，没有任何副作用，比如，在命令行中打印一些东东，改变一些全局变量等。 所以，我们的函数就成了“纯的”数据输入和数据输出，就像是一个数据转换器。另外一个“和纯函数手牵手”的，用来避免副作用的法宝是——不可变数据。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks983l91bj20hs0a0q9r.jpg)
+![](/css/images/10.jpg)
 
 ## 不可变数据简介
 
 不可变数据指的是，一旦创建就不会改变的数据。所以，这是一个很好的，避免意外在函数外面改变数据的方式。 如果一切都是不可变的， 你不能改变任何东西。 不可变性是另外一个很赞的概念。为什么说它很赞，我们等会再看。说到了“赞”这个词（英文是 Rock），我们先来说下石头（英文也是 Rock）。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks99m3f24j20hs0a0gru.jpg)
+![](/css/images/11.jpg)
 
 ## 用石头类比不可变数据
 
@@ -42,7 +42,7 @@ https://www.youtube.com/watch?v=Wo0qiGPSV-s
 > Nobody sits like this rock sits. You rock, rock. The rock just sits and is. You show us how to just sit here and that's what we need.
 > 诗词大意：无人能像这块巨石般岿然不动，你，巨石，岿然不动，好样的，你为我们证明坚持的力量，而这是我们全部所需。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9ad06r3j20hs0a0gsu.jpg)
+![](/css/images/12.jpg)
 
 这首诗很有道理，很有深意啊！它来自于《I heart Huckabees》。（下面开始鼓掌）别谢我，谢谢《I heart Huckabees》，一部很好的电影，去看看吧，很有趣。
 
@@ -54,29 +54,29 @@ https://www.youtube.com/watch?v=Wo0qiGPSV-s
 
 假如我们有个数组叫 `foo`，里面有一些数字。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9bkogayj20hs0a0agh.jpg)
+![](/css/images/13.jpg)
 
 这太无聊了，让我们把它变得更有趣一些。假如我们有一个动物园，里面有一些动物，这就比较有趣了。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9c39kcdj20hs0a0agq.jpg)
+![](/css/images/14.jpg)
 
 我决定要改变一下这个动物园，我想把兔子换成外星人，这很酷。 我很开心，因为我想让这个动物园更加具有外太空感觉。 除了兔子那个位置，我没有改变这个动物园数组的其他任何地方。我觉得很棒，但我的同事觉得动物园里应该是地球上的动物，他无法统计外星人，他估计会说：“谁特么把外星人放到这里了？！我的程序都没法工作了！”
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9czg0kfj20hs0a0jy3.jpg)
+![](/css/images/15.jpg)
 
 所以，可变性具有一系列的问题，我们不得不管理谁，改变了什么，在什么时间，谁在动物园放了什么动物。 我们不得不管理很多状态，这太头疼了！不管是个人还是一个团队。我们还会从代码中得到很多 bug，比如我同事只考虑了地球生物，没有把外星生物的情况考虑进去，所以程序就崩溃了。这是可变性的副作用让我们不开心的地方。让我们尝试用一下不可变的方式。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9dmcdn9j20hs0a0n3y.jpg)
+![](/css/images/16.jpg)
 
 ## 不可变的优缺点
 
 在不可变的世界，我的数组，我的动物园，一旦创建就永远不会变了，我也不能改变它。如果我想要个具有外星感觉的动物园，那么我需要拷贝一份相同尺寸的，作为我的原始数组。接下来，我就可以做一些修改了，比如把兔子换为外星人。然后，我把其他没变的项都拷贝过来。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9ewi28qj20hs0a0n2p.jpg)
+![](/css/images/17.jpg)
 
 这很棒，我的同事会很开心，因为程序没有崩溃，动物园里仍然是地球生物。但我得拷贝整个数组。我不得不为整个数组（甚至包括那些没有改变的项）分配一些空间。 这意味着，我的代码运行速度很慢，也消耗了很多内存。这些复杂的事很糟糕，因为拷贝浪费了大量的空间和时间，这让我们很难过，我们不想这样。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9ft1p3zj20hs0a0tef.jpg)
+![](/css/images/18.jpg)
 
 所以，如果我们想使用不可变，我们必须找到更好的方式。 幸运的是，很多聪明人很努力去思考解决这个问题，他们也找到一些很好的解决方案，来让我们更高效地使用不可变——不可变数据结构。
 
@@ -84,7 +84,7 @@ https://www.youtube.com/watch?v=Wo0qiGPSV-s
 
 或许你之前听过不可变数据结构这个概念，特别是使用过函数式编程或者 React 的人。从技术层面上来讲，不可变数据结构就像是石头一样， 一旦你创建了它，它就不会变了。或许你也听过持久化数据结构。有时候，这两个数据结构具有互换性，但是，两者还是稍有不同。如果说不可变数据是永不改变的数据，那么持久化数据就是一种可以获取老版本数据的数据。我们创建了一个更改过的新数据，我让老数据就在新数据附近（指的是你可以通过一些方法获取到老数据）。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9h2xm5aj20hs0a0q9s.jpg)
+![](/css/images/19.jpg)
 
 你或许听说过，不完全持久化数据结构可以让我们看到老数据，获取到老数据。但我们无法回去并更新任何老数据。我们能更新的就是当前的数据。 你或许还听说过，完全持久化数据结构。我们可以完全地进行时间旅行，我们可以回到过去，更新任何老数据。 这跟一些版本控制系统比如 Git 有异曲同工之妙。
 
@@ -92,90 +92,90 @@ https://www.youtube.com/watch?v=Wo0qiGPSV-s
 
 接下来，我们要讨论持久化不可变数据结构，它既持久化还不可变。让我们看它如何运作。这一切的关键在于，我们想让原始数据（比如最初的动物园）保存下来，但同时创建新数据也非常高效。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9iurt4kj20hs0a0q8x.jpg)
+![](/css/images/20.jpg)
 
 所以是什么魔法让这一切成为可能？ 我们需要让函数调用向空间时间复杂度之神跳舞祈祷吗？（小姐姐太文艺了）
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9k4e622j20hs0a0tdz.jpg)
+![](/css/images/21.jpg)
 
 ## 树和共享
 
 不！其实非常简单——Trees & sharing（树和共享，这里的树就是数据结构中的树）。这很可爱吧！这两个简单的概念将会让我们得到一种很高效的不可变数据。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9klxrbsj20hs0a0n2d.jpg)
+![](/css/images/22.jpg)
 
 如何得到？让我们先来看看“树”，因为“树”也很酷，但不幸的是，我没有相关的诗词，抱歉。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9lmfwkvj20hs0a0wk7.jpg)
+![](/css/images/23.jpg)
 
 想象我们能用“树”这种数据结构来表示动物园数组。我能做的一件事就是把所有的动物，即所有的值都放在叶子节点上，保持一个叶子节点两个值，这样它们才不会孤单。然后我们使用一个中间节点将它们连接起来，再用新的中间节点把这些中间节点也连接起来，一直往上直到根节点。这个根节点就是我们当前的“数组”，当然这个“数组”是用树这种数据结构来表示的。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9mtpf2tj20hs0a0afe.jpg)
+![](/css/images/24.jpg)
 
 
 ## 如何更新
 
 有了这种类型的数据结构，我们如何更新一些值呢？
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9nk4byij20hs0a0afm.jpg)
+![](/css/images/25.jpg)
 
  假设我的动物园是不可变的，那么我如何得到一个新版本的动物园，里面有外星人呢？我需要的就是，找到包含我想改变的值的节点，拷贝这个节点，然后在新节点中进行值的修改，最后把相关的一系列中间节点也拷贝过来，那么新的根节点就是新版本的数据 。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9pa4y14j20hs0a044a.jpg)
+![](/css/images/26.jpg)
 
 这种通过拷贝路径（即一系列中间节点）来进行更新的技术叫——路径拷贝（path copying）。这个技术很酷，因为现在我不再需要去拷贝整个数组了，只需要拷贝要改变的节点和该节点到根节点的一系列中间节点，即路径。这样相当于我们把某种线性的算法转换成了对数型的，如此一来，性能就好多了。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9pnkjgxj20hs0a0afl.jpg)
+![](/css/images/27.jpg)
 
 另外还有一个好处就是，新旧两个版本的树之间有大量的共享节点，这节约了很多空间。我们复用了老版本中的很多没有改变的部分，然而在之前，我们是需要去拷贝这部分的。这意味着，大量的内存消耗不复存在，因为我不需要再去存储很多没有改变的拷贝了。这叫结构共享，因为我们在两个版本之间共享了树的很多结构。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9qs6c8wj20hs0a0teh.jpg)
+![](/css/images/28.jpg)
 
 
 ## 如何查找
 
 我们已经讨论很多关于更新的技术，那么我们如何得到某个值呢？从结果来看，目前这个数据结构已经不只是个简单的树了，而是一种特殊的树，叫——[Trie 树](https://baike.baidu.com/item/Trie%E6%A0%91)。Trie 来自“retrieval”（取回）这个词。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9rj1robj20hs0a043u.jpg)
+![](/css/images/29.jpg)
 
 在 Trie 树中，叶子节点存储值，路径代表键。你经常会看到 Trie 树被用来把单词作为键来存储。比如，我有一个 “tea” 作为键来存储，为了得到这个单词对应的值，我要做的就是从根节点遍历树，先到 “t”，再到 “e”，再到“a”。结果得到了3。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9semwkcj20hs0a0gr6.jpg)
+![](/css/images/30.jpg)
 
 这很酷，但在我们的数据结构中，我们不会使用单词作为键，而会选择更有数组风格的index，也就是索引。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9t155qnj20hs0a0n30.jpg)
+![](/css/images/31.jpg)
 
 如果我们把索引当作二进制数字，我们可以假装那是单词，然后我们逐个比特向下遍历树，就像是先前的字母那样。让我们看看这如何运作。如果我想从数组中得到5，即索引为5的动物。我就把它转换为二进制，也就是101。然后我逐个比特查找它。先从根节点开始，然后进入分支1，然后分支0，最后分支1，得到了青蛙。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9tyq32sj20hs0a0dlg.jpg)
+![](/css/images/32.jpg)
 
 这很简单，但却非常强大。因为它让我们在这种树状数据结构很快地进行查找，而这个树状数据结构则让我们使用结构共享来更高效的描述不可变数据结构的新拷贝。另外，值得一提的是，我们没必要非使用二叉树来表示，二叉树很适合在幻灯片上展示，但在实际中通常都是32叉树。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9viy5c1j20hs0a0tew.jpg)
+![](/css/images/33.jpg)
 
 在我们刚才看的那棵树中，每一层只有一个比特的信息，我们需要向下逐个比特查找。但是，如果我们有一颗32叉树，那么每一层将会有5个比特的信息（2^5=32）。举个例子吧！如果我们有个更大的数字，比如18977。如果每层只有一个比特，那么这将是个很深的树，一共有15层，太多，太长了 。如果我在每层创建更多的叉，那么我就可以把它变为5比特，进而也就只需要3层就可以了。其实这是个权衡问题，看你是想要更深的树，还是更多叉叉的树。通常，32叉树是个很好的权衡。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9wpjcqoj20hs0a079x.jpg)
+![](/css/images/34.jpg)
 
 我们刚才看见的其实就是 Bitmapped Vector Trie。这是行话，你可以自行谷歌这种数据结构。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fks9x61wmej20hs0a0dld.jpg)
+![](/css/images/35.jpg)
 
 
 ## 对象的情况
 
 对于数组来说，这很酷，有个索引，然后跳转过去。但是，对于对象呢？我们也想能够把对象和一些随意的键关联起来，不只是索引，我们想要非整型的键。这该如何工作呢？比如，M 对应 Monkey，P 对应 panda等。我们能做的就是把字母键使用哈希算法变为数字来表示键。所以每个键都有一个数字，也不需要有序什么的，因为对象本来就是无序的。然后我们就可以像先前一样用数字来进行查找了。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksa4p2f8uj20hs0a0jxm.jpg)
+![](/css/images/36.jpg)
 
 如果我想查找键为 F 的值，那么我就先对 F 进行哈希运算，然后得到一些数字，比如5吧！5的二进制就是101，然后像之前那样逐个比特来查找，最后得到了我们想要的动物，也就是青蛙。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksa5f0qpoj20hs0a0te8.jpg)
+![](/css/images/37.jpg)
 
 其实，这是个 [Hash Array Mapped Trie](https://en.wikipedia.org/wiki/Hash_array_mapped_trie)。这个数据结构由 Phil Bagwell 和 Rich Hickey 发明，最初用在 Clojure 这门语言中来提升一些数据的运算效率。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksa65r741j20hs0a044e.jpg)
+![](/css/images/38.jpg)
 
 关于该数据结构，还有很多优化方法，可以让它变得超级快，很多细节，我们今天就不一一说了。但是，这是个基本概念：树代表数据，结构共享让我们可以在新老版本之间复用更多信息，使用二进制代表键去向下查找指定值。
 
@@ -183,35 +183,35 @@ https://www.youtube.com/watch?v=Wo0qiGPSV-s
 
 概括一下：可变性引出很多问题。这些问题需要被解决，尤其是在函数式编程中，因为函数式编程的基本思想就是不能有副作用，只能用纯函数。纯函数不能改变任何数据，它只对输入做计算，然后返回全新的输出。另一方面，不可变则很棒。因为如果我用了不可变数据，我就不会把我同事的程序搞挂掉。但是，拷贝是个处理不可变数据的糟糕的方式，因为它不高效，不管是时间层面还是空间层面，而新老版本树中的结构共享是个高效的方法。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksa71imm2j20hs0a0gs8.jpg)
+![](/css/images/39.jpg)
 
 ## Mori 和 Immutable.js 简介
 
 这些数据结构很酷，但是，我应该怎么用它们？在 JavaScript 中，有一些很棒的库帮你立马用上这些数据结构。有很多不同的方案，但我将会介绍其中几个。有一个库叫 Mori。基本来说，Mori 是个 ClojureScript 的一个 JavaScript 接口。它能让你使用上 ClojureScript 中的一些数据结构。这个库很有 Clojure 的感觉，很有函数式编程的感觉。API 是函数式的，我们等会看看。但这也使得这个库比较冷门。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksa7fsizxj20hs0a0n43.jpg)
+![](/css/images/40.jpg)
 
 另一个是 Immutable.js。这是 Facebook 出的一个库，由 Lee Byron建立。这是（刚才讨论的）那些数据结构的 JavaScript 实现。这个库很有原生 JavaScript 的感觉，没有任何 Clojure 背景。这意味着，它也有点面向对象风格的 API，尽管它仍然是返回新的数据结构，而不是改变可变的数据结构。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksa88tt5cj20hs0a0acq.jpg)
+![](/css/images/41.jpg)
 
 ## Mori 和 Immutable.js 代码片段
 
 让我们看看它们长啥样。 这是 Mori。`vector` 就像是数组，`conj` 就像是 `push` 方法。从结果看，`a` 没有变化，而 `a2` 则是新的数据。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksa8kvrcxj20hs0a0q5i.jpg)
+![](/css/images/42.jpg)
 
 这是相同算法的 Immutable.js 版本。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksa8yqyssj20hs0a076q.jpg)
+![](/css/images/43.jpg)
 
 刚才是数组，现在看看 map 这个数据结构。 这是 Mori 版本。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksaszxp8ej20hs0a07aq.jpg)
+![](/css/images/44.jpg)
 
 这是 Immutable.js 版本。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksat7rvtdj20hs0a0dm2.jpg)
+![](/css/images/45.jpg)
 
 这是真正的不可变数据结构，如果你在命令行中查看它们，就会发现它们非常奇怪。非常建议大家使用这些库，看看效果如何。
 
@@ -219,10 +219,10 @@ https://www.youtube.com/watch?v=Wo0qiGPSV-s
 
 我可以在结束前简单对比一下它们。Mori 来自 Clojure 世界，它是 ClojureScript（的 JavaScript 接口）。但是 Immutable.js 则拥有更多像 `o.get()` 这样（面向对象风格的）方法，如果你喜欢在 JavaScript 中这么写。然而对我来说，Immutable.js 的这种写法会让我感到不和谐，因为这看起来很像是可变的写法，但实际并不是。为了获取更多的函数式编程的感觉，我更喜欢 Mori，因为我更喜欢所有都是纯函数，接受输入，返回输出，仅此而已。这里也提供了一些次要的性能对比，Mori 稍微快一些，而 Immutable.js 则相对小一点。它们都是好选择，试试吧！ 希望其中一个适合你。
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksa9qzq35j20hs0a0n3k.jpg)
+![](/css/images/46.jpg)
 
 这就是我的演讲，希望对大家有用。 加油向前，不要改变数据！（鼓掌）
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fksaa4qvadj20hs0a0tea.jpg)
+![](/css/images/47.jpg)
 
 

@@ -30,7 +30,7 @@ karma init
 
 一路空格选择默认，在`What is the location of your source and test files ?`这一项输入 `*.js`，其他默认
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9yh3r64jdj20j00io42x.jpg)
+![](/css/images/52.jpg)
 
 2，在根目录新建js文件demo.js
 
@@ -59,7 +59,7 @@ karma start
 
 在命令行就可以看见运行结果啦：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3w7y18j20rr095mzd.jpg)
+![](/css/images/53.jpg)
 
 ## 觉得麻烦？
 

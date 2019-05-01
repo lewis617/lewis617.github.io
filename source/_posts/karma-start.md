@@ -10,11 +10,11 @@ tags: [Karma, 单元测试, 测试]
 
 ## 0，Karma原理
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3oak07j20is08sjs6.jpg)
+![](/css/images/48.jpg)
 
 ## 1，文件目录
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9yh3ojd3vj204002qdfs.jpg)
+![](/css/images/49.jpg)
 
 两个js文件，一个package.json
 
@@ -48,7 +48,7 @@ npm install -g karma karma-jasmine karma-chrome-launcher
  karma init karma.conf.js
 ```
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9yh3slsiaj20nd0fpn2o.jpg)
+![](/css/images/50.jpg)
 
 （4），编写demo.js
 
@@ -78,7 +78,7 @@ karma start karma.conf.js
 
 效果：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3rxlt3j20mf0dltan.jpg)
+![](/css/images/51.jpg)
 
 ## 更多测试文章：
 

@@ -10,7 +10,7 @@ tags: [Angular2]
 
 ## 例子
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xp9afp7tj20dr0gd754.jpg)
+![](/css/images/84.jpg)
 
 [源代码](https://github.com/lewis617/angular2-tutorial/tree/gh-pages/template-syntax)
 

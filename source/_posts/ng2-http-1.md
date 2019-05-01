@@ -16,7 +16,7 @@ index.html
 
 ## 例子
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9xmuxndz8j20hl0mwgo5.jpg)
+![](/css/images/64.jpg)
 
 这是官网的例子，包含两个程序：
 

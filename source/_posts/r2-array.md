@@ -14,7 +14,7 @@ reduce()、filter()、map()、some()、every()、...展开属性这些概念属�
 
 这是官方的todomvc的例子（<https://github.com/lewis617/react-redux-tutorial/tree/master/redux-examples/todomvc>）：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xtk41cryj208h04zt8o.jpg)
+![](/css/images/140.jpg)
 
 ## reduce()
 

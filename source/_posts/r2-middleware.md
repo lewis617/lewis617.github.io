@@ -12,7 +12,7 @@ tags: [React, Redux]
 
 例子是官方的例子real-world，做的是一个获取github用户、仓库的程序。
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xqzu2zo4j21eq0hjgrc.jpg)
+![](/css/images/153.jpg)
 
 本例子源代码：
 
@@ -198,7 +198,7 @@ export function loadUser(login, requiredFields = []) {
 console.log('当前执行的action:',action);
 const callAPI = action[CALL_API]
 ```
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9xqzr5c5fj20lg0f9jy7.jpg)
+![](/css/images/154.jpg)
 
 在执行initRoutes的action时候，我们得到了一个包含Symbol的action对象，这就是我们想要的action。
 
@@ -283,7 +283,7 @@ return callApi(endpoint, schema).then(
 
 本来一个action，经过中间件的加工后，变成了一系列的流程。
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xqzpt8v4j20ii0c9q4l.jpg)
+![](/css/images/155.jpg)
 
 
 * * *

@@ -83,6 +83,6 @@ export function load() {
 
 另外，附一张使用 redux-amrc 的程序截图，看到 async 那颗树了吗，就是这个插件自动帮你构建的，你可以获取 `value`、`error`、`loading`、`loaded`、`loadingNumber`，应有尽有，而且全自动生成！
 
-![](http://ww1.sinaimg.cn/mw690/83900b4egw1fabfc1z4kwj210s0nsaem.jpg)
+![](/css/images/168.jpg)
 
 快把这个插件用到你的 Redux 应用中吧！具体用法请参考 [redux-amrc 中文文档](https://lewis617.github.io/redux-amrc/)。

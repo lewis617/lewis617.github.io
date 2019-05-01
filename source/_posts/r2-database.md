@@ -10,7 +10,7 @@ tags: [React, Redux]
 
 ## 例子
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xqsagq6bg20q50ksjwp.gif)
+![](/css/images/151.gif)
 
 这个例子代码，是我自己写的程序，一个非常简单的todo，但是包含了Redux插件的用法，中间件的用法，连接数据库的方法等多个知识点。
 
@@ -256,7 +256,7 @@ export default todoApp
 
 来个图吧：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xqsbmr1uj20bb055dgc.jpg)
+![](/css/images/152.jpg)
 
 action操作数据库后，要在回调中返回信号，让reducer更新state，因为只有state变了，组件才会变。state变了，组件自动就变了，至少不用苦逼地操作dom了，还是挺开心的！
 

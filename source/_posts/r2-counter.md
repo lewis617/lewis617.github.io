@@ -10,7 +10,7 @@ tags: [React, Redux]
 
 ## 例子
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9xu9d095sg20cy01vmzy.gif)
+![](/css/images/147.gif)
 
 这个例子是官方的例子，计数器程序。前两个按钮是加减，第三个是如果当前数字是奇数则加一，第四个按钮是异步加一（延迟一秒）。
 
@@ -94,7 +94,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Counter)
 
 看到这里，很多刚接触Redux同学可能已经晕了，我来图解下Redux的流程。
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9xu9bp0bwj207n05mjrm.jpg)
+![](/css/images/148.jpg)
 
 state就是数据，组件就是数据的呈现形式，action是动作，action是通过reducer来更新state的。
 
@@ -236,11 +236,11 @@ export default rootReducer
 
 看到这里，有很多初次接触redux的同学可能已经晕了，怎么那么多概念？为了形象直观，我们在开发工具（React dev tools）上看看这些state，props什么的：
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9xu9bs5nhj2056055weu.jpg)
+![](/css/images/149.jpg)
 
 action的方法和state的变量是不是都绑定上去了啊。state怎么看呢？这个需要借助Redux的开发工具，也可以通过`Connect(Counter)`组件的State来查看redux那颗全局唯一的状态树：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xu9c41t5j20ks06u40f.jpg)
+![](/css/images/150.jpg)
 
 那个`storeState`就是全局唯一的状态树。我们可以看到只有一个`counter`而已。
 

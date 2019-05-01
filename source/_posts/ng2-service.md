@@ -12,7 +12,7 @@ tags: [Angular2]
 
 例子是官方的例子，加载一个英雄列表，点击显示详细信息。我直接放在我们的升级后的装备里面。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xnap2tp0j20700k8abd.jpg)
+![](/css/images/73.jpg)
 
 [源代码](https://github.com/lewis617/angular2-tutorial/tree/gh-pages/service)
 
@@ -57,7 +57,7 @@ export class HeroService {
 
 为了让大家能够清晰的了解Promise的用法，我们打开chrome的console：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xnb0decnj20e103r3z7.jpg)
+![](/css/images/74.jpg)
 
   1. 输入Promise，是个function。
   2. 输入`Promise.resolve('123')`，我们得到一个状态为"已经解决"的promise。
@@ -67,7 +67,7 @@ export class HeroService {
 
 然后让我们来看Promise的then方法：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xnb0lqagj20ec035gm5.jpg)
+![](/css/images/75.jpg)
 
   1. 首先我们写了一个已经`resolved`的promise，并将其赋值给`p`
   2. 然后使用`p.then()`，在回调函数里面打印参数，得到`'123'`

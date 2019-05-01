@@ -55,7 +55,7 @@ http-server -p 8081
 
 然后就可以在 `http://localhost:8081/puppeteer-demo/mock-demo`，看到程序了。
 
-![](https://wx1.sinaimg.cn/mw690/83900b4egy1fml6rd07n2j20n2074wet.jpg)
+![](/css/images/5.jpg)
 
 这个程序的功能是这样的：
 
@@ -95,7 +95,7 @@ npm test -- mock-demo
 ```
 然后就会发现 Puppeteer 中显示的数据是 `data2`。
 
-![](https://wx1.sinaimg.cn/mw690/83900b4egy1fml6wsw1goj20oc090wfj.jpg)
+![](/css/images/6.jpg)
 
 我们看下测试脚本是如何进行拦截重写的：
 
@@ -136,7 +136,7 @@ page.on('request', request => {
 
 最后再聊一下端对端测试和单元测试的比例问题。谷歌的测试团队曾经提出过一个[测试金字塔的概念](https://docs.google.com/presentation/d/15gNk21rjer3xo-b1ZqyQVGebOp_aPvHU3YH7YnOMxtE/edit#slide=id.g437663ce1_53_98)。大概就是单元测试应该最多，然后是集成测试（部分单元之间的集成，不像端对端那样完全黑盒），最少的应该是端对端测试：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egy1fml7bqxe25j20al095t8v.jpg)
+![](/css/images/7.jpg)
 
 为何会这样呢？因为他们认为端对端测试不能像单元测试那样快速的定位问题所在，端对端测试所发现的问题，可能存在系统中的任何位置，但单元测试的反馈定位就更加直接准确。另外，单元测试写起来更加简单快速，而端对端测试则需要整个系统部署好之后才能测试，这样比较慢，毕竟有时候开发周期还是很长的，人家开发一周前写完的代码，你现在才开始测试，有点拖后腿。以上说法非常有道理，我也认为单元测试非常好，但是端对端测试也是有意义的，它可以检测出所有单元连接后的问题，这些问题只能通过端对端测试才能测出来。所以，两者都要写，不要怕麻烦，后期的收益是很大的！
 

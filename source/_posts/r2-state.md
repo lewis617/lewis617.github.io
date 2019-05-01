@@ -14,29 +14,29 @@ tags: [React, Redux]
 
 有图为证，这是官方的todomvc的例子：
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9xtyc19m6j208h04zt8o.jpg)
+![](/css/images/157.jpg)
 
 我们直接看React开发工具截图：
 
 App组件没有state
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xtz97rnuj20l8095q57.jpg)
+![](/css/images/158.jpg)
 
 Header组件没有state
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xtz950e9j20l8095tb0.jpg)
+![](/css/images/159.jpg)
 
 MainSection组件有state
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xtz8nocuj20l9095die.jpg)
+![](/css/images/160.jpg)
 
 TodoItem组件有state
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xtz9dusrj20l7091n0n.jpg)
+![](/css/images/161.jpg)
 
 Footer组件没有state
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xtz9fo4fj20l7091q5s.jpg)
+![](/css/images/162.jpg)
 
 ## 何时用React组件的state、props？
 
@@ -61,7 +61,7 @@ props则正好相反，它通常存储一些方法，一些可能需要存库的
 
 我们在开发工具上查看全局唯一状态树，发现是个todos数组。对应的是长期数据（并不一定要求是长期数据）和用于在多个组件中共享的数据。
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9xtz92w0nj20kt06x0uh.jpg)
+![](/css/images/163.jpg)
 
 ## 再看Redux与React流程
 

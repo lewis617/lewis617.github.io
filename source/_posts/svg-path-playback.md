@@ -5,7 +5,7 @@ tags: [SVG, 贝塞尔曲线,SVG SMIL animation]
 ---
 最近做了埋点方案XTracker的轨迹回放功能，大致效果就是，在指定几个顺序的点之间形成轨迹，来模拟用户在页面上的先后行为（比如一个用户先点了啥，后点了啥）。效果图如下：
 
-![](https://wx1.sinaimg.cn/mw690/83900b4egy1fk1jn3atyng204h04ead8.gif)
+![](/css/images/198.gif)
 
 在这篇文章中，我们来聊聊轨迹回放的一些技术细节。
 
@@ -24,7 +24,7 @@ tags: [SVG, 贝塞尔曲线,SVG SMIL animation]
 </svg>
 ```
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy4xjj4aij203403g0py.jpg)
+![](/css/images/187.jpg)
 
 
 然后根据需要多画几个红点就可以了，也可以通过js批量生成：
@@ -50,7 +50,7 @@ function createCircles() {
 }
 ```
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy50l2qlrj20dw0d8wei.jpg)
+![](/css/images/188.jpg)
 
 
 ## 两点之间的轨迹
@@ -62,11 +62,11 @@ function createCircles() {
 SVG通过path可以画多种曲线主要包括：
 
 - 二次贝塞尔曲线：需要一个控制点，用来确定起点和终点的曲线斜率。
-	![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy6fw4aeuj205a04g3yd.jpg)
+	![](/css/images/189.jpg)
 - 三次贝塞尔曲线：需要两个控制点，用来确定起点和终点的曲线斜率。
-	![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy6fi0z8pj205a04gglj.jpg)
+	![](/css/images/190.jpg)
 - 圆弧：需要两个半径、旋转角度、逆时针还是顺时针、大圆弧还是小圆弧等多个属性。
-	![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy6hbu8zlj205k05kt8o.jpg)
+	![](/css/images/191.jpg)
 
 显然，二次贝塞尔曲线最为简单，所以我们决定用二次贝塞尔曲线来画两点之间的弧线。在SVG的path中，二次贝塞曲线的参数是：
 
@@ -84,7 +84,7 @@ M x1 y1 Q x2 y2 x3 y3
 
 效果：
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy6s1oe7uj203c02gq2p.jpg)
+![](/css/images/192.jpg)
 
 ### 确定控制点
 
@@ -102,7 +102,7 @@ M x1 y1 Q x2 y2 x3 y3
 
 画个图吧！
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy7sndvwjj20hy0cgjrr.jpg)
+![](/css/images/193.jpg)
 
 - 在顺时针区域画中垂线。中垂线和垂直线的角度为`angle`
 - 规定`offset`为某个定值（比如40，或者其他比较小的定值）。
@@ -128,7 +128,7 @@ function getCtlPoint(startX, startY, endX, endY, offset) {
 
 如果起点终点相同，我们就不能使用二次贝塞尔曲线了，而是应该在该点右侧画一个小圆弧，就像这样：
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy8a993prj203e032a9t.jpg)
+![](/css/images/195.jpg)
 
 
 在Path中圆弧的参数格式为：
@@ -241,7 +241,7 @@ var pointList = [
 
 那么效果图：
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fjy8i3vmmij206w05s3yh.jpg)
+![](/css/images/196.jpg)
 
 
 完整demo：
@@ -273,7 +273,7 @@ path.innerHTML= '<animate attributeName="stroke-dashoffset" to="0"  dur="7s" beg
 
 完整demo：
 
-![](https://wx3.sinaimg.cn/mw690/83900b4egy1fk1jn3f98vg204h04edfz.gif)
+![](/css/images/197.gif)
 
 https://codepen.io/lewis617/pen/vexjyp/
 

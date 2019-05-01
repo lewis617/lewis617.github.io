@@ -10,13 +10,13 @@ tags: [RequireJs, Bootstrap]
 
 ### 传统开发思路如下：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9yh3tas1qj20i208bt9d.jpg)
+![](/css/images/169.jpg)
 
 缺点：所有代码写在一个html中，难以阅读，难以维护，难以复用！
 
 ### 使用Requirejs开发思路如下（且看笔者如何解耦模块化代码）：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9yh3q1t3zj20df0csmxk.jpg)
+![](/css/images/170.jpg)
 
  缺点：编写过程较为复杂
 
@@ -26,4 +26,4 @@ tags: [RequireJs, Bootstrap]
 
 看一下代码运行效果吧：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9yh3vaig6j20os0pjafa.jpg)
+![](/css/images/171.jpg)

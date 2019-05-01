@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=AslncyG8whg
 
 很酷的是，Observable正在变为ECMAScript的标准，就像Promise那样，但现在你还不能直接在浏览器里使用它（原话很啰嗦，直接提取有用信息）。所以你需要使用RxJS。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4ejw1fakfuc1t28j20dw08pq41.jpg)
+![](/css/images/178.jpg)
 
 RxJS是Observable的一种引用实现，它提供了一些定制的功能，比如操作符（Operators）、创建不同类型Observable的工厂方法。我同事说，RxJS就像是
 
@@ -30,7 +30,7 @@ RxJS是Observable的一种引用实现，它提供了一些定制的功能，比
 
 1. 创建Observable有很多种方式（直接贴截图）：
 
-	![](https://ws4.sinaimg.cn/mw690/83900b4ejw1fakgfw4kdrj20dw080wfo.jpg)
+	![](/css/images/179.jpg)
 	
 	你可以：
 	
@@ -42,7 +42,7 @@ RxJS是Observable的一种引用实现，它提供了一些定制的功能，比
 	 
 2. Observable可以被订阅（Subscribing）：
 
-	![](https://ws1.sinaimg.cn/mw690/83900b4ejw1fakhztxxnfj20dw07ygmj.jpg)
+	![](/css/images/180.jpg)
 	
 	Observable的订阅和Promise的then挺像的。你可以给它提供三个函数：
 	
@@ -64,7 +64,7 @@ RxJS是Observable的一种引用实现，它提供了一些定制的功能，比
 
 我们非常喜欢RxJS，也非常喜欢Redux，所以我们想，把这两个技术结合一下吧！我们实验了几种模式，经过了一些迭代，最后有了一个稳定的解决方案。如果你之前开源过什么东西，那么你一定知道，最重要的事情是——先做个好logo。不是写测试，不是保证它正常工作，也不是写文档，而是要先做个logo，这是最重要的事情，关乎你能拿多少star（场下有人笑了，然后他讲了他们logo的来历，大概就是，本来想结合RxJS的logo和Redux的logo，但是Redux当时还没有logo，他们就用Redux的谐音“three ducks”，三只鸭子做为logo，在经历了压扁、合并以及添加旋转动画后，终于得到了他们满意的logo，也就是现在redux-observable的logo）。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4ejw1faknp217eaj20dw0an74v.jpg)
+![](/css/images/181.jpg)
 
 redux-observable是一个Redux中间件，用来管理副作用，包括异步。我们使用一个叫Epic的概念去完成这个工作。那么什么是Epic？
 
@@ -110,14 +110,14 @@ redux-observable是一个Redux中间件，用来管理副作用，包括异步�
 
 4. 让我们来看另外一个debounce例子吧（代码和程序截图如下，这是个计数器的例子，大概就是添加了debounce后，连续点击加一或减一，速率过快的操作将会被取消）！
 
-	![](https://ws2.sinaimg.cn/mw690/83900b4ejw1fakp4thjkxj20dw07yt9n.jpg)
+	![](/css/images/182.jpg)
 
 上述示例都太简单了，让我们看几个复杂的例子，这些例子不会讲解代码的细节，只是用来证明**RxJS和redux-observable在复杂场景中有多么地牛！**
 
 - 自动补全（他先是演示了使用普通JavaScript的写法，代码特别长，过程特别繁琐，然后演示了使用Epic的写法，只用了debounce、switchMap和map三个操作符，代码特别短，而且非常声明式和易读）
 - 双向多重的WebSockets（他还是先演示使用普通JavaScript代码的写法，代码特别多，而且容易引入bug。然后他演示了Epic的写法，功能一样不少，但是代码特别少而且非常声明式）
 
-![](https://ws1.sinaimg.cn/mw690/83900b4ejw1faku828ck7j20dw08p75i.jpg)
+![](/css/images/183.jpg)
 
 让我们来快速总结下redux-observable吧：
 
@@ -127,13 +127,13 @@ redux-observable是一个Redux中间件，用来管理副作用，包括异步�
 
 但是在你尝试使用redux-observable之前，**你应该提前学习Redux和RxJS**。当然，这应该是业余时间做的事，或是在你特别想挑战自己的情况下才要做的事。我不是打击大家的积极性，只是不想让在座的各位产生一个错误观念，就是即便我的应用很小很简单，我仍然应该使用redux-observable。 但是，如果你觉得我今天描述的问题，也正好是你的问题，那么你一定愿意学习RxJS、Redux和redux-observable。 
 
-![](https://ws2.sinaimg.cn/mw690/83900b4ejw1faku9kr2h5j20dw08pab6.jpg)
+![](/css/images/184.jpg)
 
 另外，RxJS拥有非常陡峭的学习曲线。 最近有个新流行词叫响应式编程（Reactive Programing ），RxJS做的就是这个。响应式编程是个令人发狂的编程范式，不过你可以这么理解它：就像是你先安装好管道，但还没有水流过管道，等到将来某个人发起了一个action，然后潺潺流水就来了，你的管道就开始运作了。（他之所以用流水这个比喻，主要是为了突出响应式编程，自动响应和变化传播的特性，如果你还不能理解，可以参考[维基百科](https://zh.wikipedia.org/wiki/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B)）。响应式编程是一种完全不同的编程风格。
 
 （然后他介绍了他的联合作者，展示了redux-observable的官网以及目前有哪些公司在用，最后致谢。）
 
-![](https://ws2.sinaimg.cn/mw690/83900b4ejw1fakubrwyb6j20dw08pdgx.jpg)
+![](/css/images/185.jpg)
 
 ## 总结
 

@@ -14,13 +14,13 @@ https://www.youtube.com/watch?v=AslncyG8whg
 
 管理状态很困难，对吧？如果你写过复杂应用，你一定对此深恶痛绝。React社区还有Angular2社区和Ember社区现在都开始使用一个库，叫Redux。为什么？因为它让管理状态变得简单多了。但Redux有个问题，就是它对你写异步代码没什么帮助，因为Redux认为异步是个比管理状态更难的问题。特别是当你试图去解决一些复杂问题，比如：并行或多重WebSockets。这些问题本身就很复杂，你也没辙。所以，这次演说将会介绍使用另一个库，叫RxJS。这个库至少可以让异步问题变得可控可管理，至少可以让你知道发生了什么。
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1fajfdn4115j20dw08pabg.jpg)
+![](/css/images/173.jpg)
 
 ## 自我介绍
 
 我是谁？我是Jay Phelps。很明显，照片中的衬衫不是我今天穿的，尽管它们很像，（歪果仁就是啰嗦，不过场下听众听到这都乐了）。其实我穿了另外一件蓝色衬衫，但这是我的推特头像，它可以帮助那些还没有认出我的人认出我来。很明显，我是Netflix的软件工程师。你可以关注我，通过下划线jayphelps（就是_jayphelps，然后他又扯了一些没用的，说有另外一个jayphelps，是一个16岁的家伙，经常转推一些足球图片。他说他经常说这个梗，因为很多本来要关注他的人，都去关注那个16岁足球小哥了）。
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1fajfagmj60j20dw08pgmo.jpg)
+![](/css/images/174.jpg)
 
 ## 什么是Redux
 
@@ -49,7 +49,7 @@ export default function counter(state = 0, action) {
 ```
 我们仅仅就是选择action类型，当action是加一，state就加一，action是减一，state就减一，就是这么字面性质的工作。reducer负责state更新，但它必须是同步的。这意味着，如果reducer收到加一的action，那么就必须立马加一。reducer不能去除速率过快的事件（debounce），也不能和服务器交互，也不能问“我是否可以加一“。reducer只能受到action，然后立马同步执行。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1fajm1o61ufj20dw08pwfk.jpg)
+![](/css/images/175.jpg)
 
 ## 异步
 
@@ -70,7 +70,7 @@ export default function counter(state = 0, action) {
 
 在Redux世界里，人们经常使用中间件来处理这些操作。所有action在你发起后，和到达reducer前，都必须穿过中间件。现在已经有很多中间件使用回调和Promise来做这些事了（指那些复杂的异步操作）。下面就让我们看看这两种最常用的异步处理方法吧！
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1fajlzuj7r5j20dw08p75d.jpg)
+![](/css/images/176.jpg)
 
 ## 回调和Promise
 
@@ -103,7 +103,7 @@ export default function counter(state = 0, action) {
 
 上述场景也就Ajax是单一的值，其他几个场景都不是。那我们该怎么办呢？那就是使用Observable！
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1fajm3lhmmoj20dw08pjsc.jpg)
+![](/css/images/177.jpg)
 
 ## 未完待续
 

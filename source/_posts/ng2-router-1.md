@@ -10,7 +10,7 @@ tags: [Angular2]
 
 ## 例子
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xkkfl4kwj20bc0a8dgz.jpg)
+![](/css/images/68.jpg)
 
 例子是官网的例子，包含一个"危机中心"和"英雄列表"，都在一个app中，通过路由来控制切换视图。还包含了Promise的用法，服务的用法等多个知识点。
 
@@ -140,7 +140,7 @@ export class AppComponent { }
 
 好了我们的带有路由的组件编写好了，其实就是个可以切换视图的组件而已，就是这么简单。我们在浏览器中运行程序，点击`nav`中的heroes，就可以把子视图`Heroes`渲染出来了。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9xkkfld1kj20az0cg3zh.jpg)
+![](/css/images/69.jpg)
 
 浏览器路径变为
 
@@ -198,7 +198,7 @@ var heroesPromise = Promise.resolve(HEROES);
 
 例子（chrome console）：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xkkfarv9j20k602l74v.jpg)
+![](/css/images/70.jpg)
 
 更详细的的用法，可以看我之前讲的Promise：[Angular2 系列教程（七）Injectable、Promise、Interface、使用服务](https://lewis617.github.io/2016/02/28/ng2-service/) 。
 

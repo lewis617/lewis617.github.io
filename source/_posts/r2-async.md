@@ -10,7 +10,7 @@ tags: [React, Redux]
 
 ## 例子
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9xsvlmvplg20q50ksq8j.gif)
+![](/css/images/141.gif)
 
 这个例子是官方的例子，主要是从Reddit中请求新闻列表来显示，可以切换react和frontend关键词来切换新闻列表，可以刷新当前新闻列表。
 
@@ -106,7 +106,7 @@ export function fetchPostsIfNeeded(reddit) {
 
 单一state树结构是Redux的最大特点。我们今天主要讲解state的树结构长什么样？首先，我们可以通过React的chrome插件，来看下这个state树：
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9xsvkmvlfj20ks07zq5d.jpg)
+![](/css/images/142.jpg)
 
 我们点击Connect(App)，可以查看整个程序的state树，但是这棵树是从storeState开始的。我们在第一课中讲到，只能通过Redux的devtools来查看全局单一state，其实是片面的，通过React的chrome插件同样可以看到这棵树。
 
@@ -216,7 +216,7 @@ componentWillReceiveProps(nextProps) {
 
 1，刷新页面：
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9xsvkl9lkj20qx06ngoi.jpg)
+![](/css/images/143.jpg)
 
 首先，执行了`componentDidMount`，也就是渲染了组件。然后执行`request_post`的action，这个action改变了state，state和props就是部分绑定关系，所以触发了`componentWillReceiveProps`。
 
@@ -228,7 +228,7 @@ componentWillReceiveProps(nextProps) {
 
 2，切换新闻类型
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9xsvkukugj20qr089wis.jpg)
+![](/css/images/145.jpg)
 
 
 

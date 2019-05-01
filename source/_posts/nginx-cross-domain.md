@@ -10,7 +10,7 @@ tags: [nginx, 跨域, Flask]
 
 <!--more-->
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9yh3lfuw3j20iq08caag.jpg)
+![](/css/images/85.jpg)
 
 为了少敲代码，提高工作效率，我们当然希望将python中间层砍掉，但是如何解决以下三个问题，成为关键：
 
@@ -24,7 +24,7 @@ tags: [nginx, 跨域, Flask]
 
 打开pycharm，新建项目选择flask，name分别设为client和server。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3n0udyj203d042mx6.jpg)
+![](/css/images/86.jpg)
 
 编写client和server的python文件，使其分别跑在5000端口和5001端口：
 
@@ -56,11 +56,11 @@ if __name__ == '__main__':
 
 运行client.py
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3lootcj205902it8m.jpg)
+![](/css/images/87.jpg)
 
 运行server.py
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9yh3misioj204s027glh.jpg)
+![](/css/images/88.jpg)
 
 ## 安装nginx（ubuntu）
 
@@ -136,18 +136,18 @@ sudo /etc/init.d/nginx restart
 
 这些命令使得localhost:5017代理了localhost:5000，如图：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9yh3mwml4j204s02ajra.jpg)
+![](/css/images/89.jpg)
 
 使得localhost:5017/proxy代理了localhost:5001，如图：
 
-![](https://ws2.sinaimg.cn/mw690/83900b4egw1f9yh3ngv9zj2064025747.jpg)
+![](/css/images/90.jpg)
 
 使得localhost:5017/proxy/api/代理了localhost:5001/api/，如图：
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9yh3npj0jj207402hq2t.jpg)
+![](/css/images/91.jpg)
 
 如此以来，原本需要从5000端口请求5001端口的url，变成了从5017端口请求5017端口的/proxy。解决了同源策略带来的跨域问题。
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3o1j2dj20iq08cdgp.jpg)
+![](/css/images/92.jpg)
 
 这个配置文件也可以和uwsgi配合起来用，也可以不用uwsgi，直接运行python文件启动服务，本文便是后一种。

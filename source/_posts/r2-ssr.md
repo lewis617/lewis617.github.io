@@ -10,7 +10,7 @@ tags: [React, Redux]
 
 ## 例子
 
-![](https://ws4.sinaimg.cn/mw690/83900b4egw1f9xs2gkuhsg20cy01vmzy.gif)
+![](/css/images/156.gif)
 
 例子仍然是官方的计数器例子，不过我们实现了服务端渲染和state预加载。
 

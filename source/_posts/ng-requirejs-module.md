@@ -10,7 +10,7 @@ Angular的指令是模块化很好的一个体现，下面我将只使用指令�
 
 模块化关系图：
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9yh3om8qij20bl05e0t8.jpg)
+![](/css/images/58.jpg)
 
 # 传统开发方式
 
@@ -82,7 +82,7 @@ define(['app','text!./aaa.html'],function(app,aaa){
 
 封装在一个文件夹里面，随时调用复用：
 
-![](https://ws1.sinaimg.cn/mw690/83900b4egw1f9yh3p0f0kj202y01zmx0.jpg)
+![](/css/images/59.jpg)
 
 `require(['./aaa/aaa'])`即可调用aaa模块;
 
@@ -165,4 +165,4 @@ require(['angular','./aaa/aaa','./bbb/bbb','./ccc/ccc','service'],function(angul
 
 最后看下总体目录：
 
-![](https://ws3.sinaimg.cn/mw690/83900b4egw1f9yh3p8mnoj203m08iaae.jpg)
+![](/css/images/60.jpg)
