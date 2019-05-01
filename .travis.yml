@@ -13,8 +13,7 @@ install:
 # 不用yarn的话这里改成 npm i 即可
 - yarn
 script:
-- hexo clean
-- hexo generate
+- gulp
 after_success:
 - cd ./public
 - git init
