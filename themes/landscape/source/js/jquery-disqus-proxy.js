@@ -53,8 +53,7 @@ function loadThread(cb) {
   var query = 'identifier=' + encodeURIComponent(identifier)
   var url = '//' + window.disqusProxy.server + ':'
     + window.disqusProxy.port.toString() + '/api/getThreads'
-  $.get(url + '?' + query, cb)
-  // $.get('//localhost:3000/getThreads', cb)
+  $.get(url + '?' + query, cb);
 }
 
 function renderCommentBox(thread) {
