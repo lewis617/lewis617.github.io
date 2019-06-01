@@ -26,11 +26,9 @@ tags: [JavaScript 基础, 柯里化]
 
 比如，ES6 的 map、reduce 都是高阶函数（函数作为参数），但它们不是柯里化。
 
-## 面试题一
+## 面试题一：用 apply 实现 bind
 
-用 apply 实现 bind：
-
-```
+```js
 Function.prototype.bind = function () {
   const fn = this;
   const args = Array.from(arguments);
@@ -43,15 +41,16 @@ Function.prototype.bind = function () {
 
 bind 先消化一部分参数，apply 再消化一部分参数。
 
-## 面试题二
+## 面试题二：实现 sum 函数
 
-实现 sum 函数，满足：
+满足：
 
-```
+```js
 sum(1)(2).valueOf() // 3
 sum(1)(2)(3).valueOf() // 6
 sum(1)(2)....(n).valueOf() // 所有参数的和
 ```
+
 sum 就是一个柯里化函数，因为它执行一次就消化了一部分参数，并返回了一个函数继续消化剩余的参数，最终还能把所有消化的参数计算出来。
 
 先实现两个参数的版本：
