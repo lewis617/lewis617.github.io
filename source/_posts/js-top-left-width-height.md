@@ -1,10 +1,25 @@
 ---
-title: JavaScript 基础：scrollTop,offsetTop,scrollLeft,offsetLeft,clientWidth,clientHeight,offsetWidth,offsetHeight,scrollWidth,scrollHeight
+title: JavaScript 基础：偏移宽高距离、滚动宽高距离、可视宽高
 date: 2019-06-02 19:26:00
-tags: [JavaScript 基础, scrollTop,offsetTop,scrollLeft,offsetLeft,clientWidth,clientHeight,offsetWidth,offsetHeight,scrollWidth,scrollHeight]
+tags: [JavaScript 基础, 偏移宽高距离, 滚动宽高距离, 可视宽高]
 ---
 
-今天，我们要讲的是scrollTop,offsetTop,scrollLeft,offsetLeft,clientWidth,clientHeight,offsetWidth,offsetHeight,scrollWidth,scrollHeight的含义。
+今天，我们要讲的是偏移宽高距离、滚动宽高距离、可视宽高的含义。大概有这些属性：
+
+```
+scrollTop
+offsetTop
+scrollLeft
+offsetLeft
+clientWidth
+clientHeight
+offsetWidth
+offsetHeight
+scrollWidth
+scrollHeight
+```
+
+
 
 <!--more-->
 
