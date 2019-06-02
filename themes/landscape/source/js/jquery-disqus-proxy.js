@@ -51,9 +51,11 @@ function loadDisqusProxy() {
 function loadThread(cb) {
   var identifier = window.disqusProxy.identifier
   var query = 'identifier=' + encodeURIComponent(identifier)
-  var url = '//' + window.disqusProxy.server + ':'
-    + window.disqusProxy.port.toString() + '/api/getThreads'
-  $.get(url + '?' + query, cb);
+  var url = '//' + window.disqusProxy.server + '/api/getThreads'
+  $.get(url + '?' + query, cb).fail(function () {
+    console.warn('loadThread 失败，重新请求……');
+    loadDisqusProxy();
+  });
 }
 
 function renderCommentBox(thread) {
