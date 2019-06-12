@@ -13,6 +13,7 @@ fancybox: true
 # Sidebar
 sidebar: right
 widgets:
+- video
 - series_posts
 # - category
 # - tag
