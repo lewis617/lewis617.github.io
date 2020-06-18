@@ -18,9 +18,9 @@ https://leetcode.com/problems/house-robber-iii
 
 ## 动态规划简介
 
-动态规划是(Dynamic Programming，DP)是一种将复杂问题分解成更小的子问题来解决的优化技术。那么具体哪些算法用到了动态规划呢？使用动态规划的算法很多，先列举一些简单的吧！比如：
+动态规划是(Dynamic Programming，DP)是一种将复杂问题分解成更小的子问题来解决的优化技术。那么具体哪些算法用到了动态规划呢？使用动态规划的算法很多，先列举一个简单的吧！
 
-1，求斐波那契数列：
+求斐波那契数列：
 
 ```js
 function fibonacci(num) {
@@ -32,12 +32,6 @@ function fibonacci(num) {
 ```
 
 上述函数将 `fibonacci(num)` 分解成 `fibonacci(num - 1)` 和 `fibonacci(num - 2)`，然后继续分解直到 `num` 为1或2时终止。
-
-2，深度优先遍历（DFS）：
-
-   - 先访问一个顶点，然后对相邻顶点挨个进行深度优先遍历。
-
-上述做法将复杂的图遍历分解为“每个顶点的**访问**与**相邻顶点的深度优先遍历**”。有点类似于二叉树先序遍历。具体代码请参考前面的博文[《 JavaScript 版数据结构与算法（八）图 》](https://lewis617.github.io/2017/02/19/graph/)。
 
 ## 动态规划和分而治之的区别
 
