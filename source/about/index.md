@@ -1,24 +1,20 @@
 ---
 title: 关于我
-date: 2017-10-01 02:14:25
+date: 2021-02-19 11:31:00
 ---
 
 <img src="/css/images/242.jpg" width = "300" alt="" align=center style="border-radius:50%;"/>
 
-刘一奇，90后程序员、吉他手，先后在中科院计算所、360网络安全研究院学习工作，现就职于阿里巴巴，担任资深前端工程师。业余喜欢写博客、玩乐器、烧菜、练双节棍。
+刘一奇，现就职于阿里巴巴，主攻前端智能化、代码智能化方向，在基于深度学习的设计稿转代码、自然语言生成逻辑代码方向有深入研究和丰富的实践经验。
 
-邮箱：[lewis617@163.com](mailto:lewis617@163.com)
+## 知乎文章
 
-博客：<http://www.liuyiqi.cn>
+知乎的几篇文章偏智能化多一些。
 
-GitHub：<https://github.com/lewis617>
+https://www.zhihu.com/people/liu-yi-si-15-89/posts
 
-书籍著作：<http://www.liuyiqi.cn/2016/11/20/r2-book>
+## 视频课程
 
-演奏录音：<http://i.xiami.com/liuyiqi>
+视频课程都在慕课网，有收费的，也有免费的。课程内容基于前端，但不限于前端，包括服务端开发、数据结构与算法、深度学习等主题。
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=1&id=38248979&auto=0&height=430"></iframe>
-
-阿里18周年年会演出视频：http://www.miaopai.com/show/uk8PpHEYyV3jaQgK3DyfLw2KiQwTdTGj5P~JWQ__.htm
-
-<video src="https://gslb.miaopai.com/stream/uk8PpHEYyV3jaQgK3DyfLw2KiQwTdTGj5P~JWQ__.mp4?ssig=5d6028719aca48456a32d02f2426cd7b&time_stamp=1539229377690&cookie_id=&vend=1&os=3&partner=1&platform=2&cookie_id=&refer=miaopai&scid=uk8PpHEYyV3jaQgK3DyfLw2KiQwTdTGj5P%7EJWQ__" controls poster="http://imgaliyuncdn.miaopai.com/stream/uk8PpHEYyV3jaQgK3DyfLw2KiQwTdTGj5P~JWQ___la21_4.jpg" preload="none"></video>
+https://www.imooc.com/t/2060833
