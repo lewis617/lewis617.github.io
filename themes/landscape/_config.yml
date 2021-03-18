@@ -41,7 +41,7 @@ google_plus:
 fb_admins:
 fb_app_id:
 
-donate:
-  text: '如果您觉得本博客帮到了您，就打赏支持一下吧～'
-  wechat: '/css/images/1556699647494-0.jpg'
-  alipay: '/css/images/1556699647501-1.jpg'
+# donate:
+#   text: '如果您觉得本博客帮到了您，就打赏支持一下吧～'
+#   wechat: '/css/images/1556699647494-0.jpg'
+#   alipay: '/css/images/1556699647501-1.jpg'
