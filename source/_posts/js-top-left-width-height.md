@@ -41,7 +41,7 @@ scrollHeight
 屏幕可用工作区高度： window.screen.availHeight;
 ```
 
-![image](https://user-images.githubusercontent.com/11524612/58760464-bc148600-856a-11e9-8fa5-2ac325219691.png)
+![示意图](/css/images/offset.svg)
 
 
 ## 信息提取与总结
