@@ -67,10 +67,8 @@ theme: landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
-# deploy:
-#   type: git
-#   repo:
-#     github: git@github.com:lewis617/lewis617.github.io.git
-#     coding: git@git.coding.net:lewis617/lewis617.coding.me.git
-#   branch: master
+deploy:
+  type: git
+  repo: git@github.com:lewis617/lewis617.github.io.git
+  branch: master
 
