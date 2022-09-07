@@ -16,9 +16,9 @@ function getFiles(dir, files_) {
   return files_;
 }
 
-const files = getFiles(path.join(__dirname, '../themes'));
+const files = getFiles(path.join(__dirname, '../source'));
 const urls = files.reduce((last, file) => {
-  const curUrls = fs.readFileSync(file, 'utf-8').toString().match(/http(.+).sinaimg.cn(.+)(jpg|gif)/g);
+  const curUrls = fs.readFileSync(file, 'utf-8').toString().match(/http.+ata.+(jpg|gif|png)/g);
   if (!curUrls) { return last; }
   return [...last, ...curUrls];
 }, []);

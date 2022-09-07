@@ -92,7 +92,7 @@ open $(npm root -g)/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/We
 
 选择 WebDriverAgentRunner，并在下面两个 Signing 面板上选择之前安装的 provisioning 文件。
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/e60eccda5f84c981c7ba933b4cc37f00.png)
+![image.png](/css/images/1662520255065-2.png)
 
 ## 编写简单测试脚本
 

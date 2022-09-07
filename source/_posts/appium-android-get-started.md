@@ -56,10 +56,10 @@ Android SDK 最好的安装方法是安装 [Android Studio](https://developer.an
 
 安装完成后，点击这里查看 SDK 目录：
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/560667f7c3c2da24c502e5c9555367ac.png)
+![image.png](/css/images/1662520255050-0.png)
 
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/8191aafc8e1052d83d9dbad2315b4486.png)
+![image.png](/css/images/1662520255064-1.png)
 
 ### 设置 ADNROID_HOME 环境变量
 

@@ -47,7 +47,7 @@ dfs(json);
 
 只需要更改上述 `dfs` 函数的参数，就可以渲染 JSON 树中的任意一项了，也可以渲染表单项来编辑它们。比如之前做的递归表单组件：
 
-![递归表单](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/9d7c702a9e3e240b4945ed53a7c5070f.png)
+![递归表单](/css/images/1662520255066-3.png)
 
 ## 链表指针简介
 

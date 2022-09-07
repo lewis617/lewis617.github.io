@@ -6,7 +6,7 @@ tags: [机器学习, TensorFlow, Object Detection API, 二值化]
 
 前不久，在集团内部做了一个 CR 系统，可以从设计稿上截图识别某个组件并给出代码。
 
-![](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/253b2a3479efb954c13d29c33ebde193.gif)
+![](/css/images/1662520255066-4.gif)
 
 但是，我不想只是识别单个组件，最好能识别整张设计稿的多个组件。于是，花了两三天进行了这项技术的探索调研，并将过程记录下来。
 
@@ -18,17 +18,17 @@ tags: [机器学习, TensorFlow, Object Detection API, 二值化]
 
 识别多个组件的本质是定位，我首先想到的是像车牌定位，或者跳一跳外挂那样的利用颜色，进行二值化等处理进行识别，但设计稿中的组件并没有非常明显的边界，这种方法显然是不可行的。
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/92540cd6fba715d2f87569ee4178045a.png)
+![image.png](/css/images/1662520255066-5.png)
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/327680fc4bbd5694af00345eff985b28.png)
+![image.png](/css/images/1662520255067-6.png)
 
 ### TensorFlow Object Detection API
 
 后来发现了谷歌开放的 TensorFlow Object Detection API，顿时看到了希望。TensorFlow Object Detection API 可以创建一个精确的机器学习模型，该模型能够在单张图片中对多个物体进行定位、分类。看了几张效果图，认为应该有戏：
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/b0d53971daa00b7368ce102128808ce2.png)
+![image.png](/css/images/1662520255067-7.png)
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/18885ecc69b4d3d41ba09b174b414653.png)
+![image.png](/css/images/1662520255067-8.png)
 ## 机器选择
 
 TensorFlow 可以在各个系统上跑，甚至可以在浏览器里运行和 retrain。但是如果要有更好的速度，最好选择可以用 GPU 的系统，由于 OSX 系统的在显卡方面的封闭性，TensorFlow 不支持在 OSX 上跑 GPU 版本，所以剩下的选择是：
@@ -48,7 +48,7 @@ TensorFlow Object Detection API 提供了一些[现成的模型](https://github.
 
 我们要进行的是整张设计稿的识别，所以最初我用的训练图片是整张设计稿，但训练下来，发现根本识别不出来什么。
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/7b973e2b8ba9e2444738610724a8f391.png)
+![image.png](/css/images/1662520255068-9.png)
 
 思考了一下，发现是因为：
 
@@ -57,11 +57,11 @@ TensorFlow Object Detection API 提供了一些[现成的模型](https://github.
 
 于是我打算缩小图片尺寸，换成了表单项的识别，即在一个表单上识别出输入框、下拉框、文本框等。将尺寸缩小后，我在那台低配的台式机上训练了半个小时（没跑完），最终识别效果图如下：
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/2d708f7fec32820d1daec8087053804f.png)
+![image.png](/css/images/1662520255068-10.png)
 
 至少证明是可行的了。但是还有一些表单项没有识别出来，所以我继续缩小训练图片的尺寸，将七个表单项的识别换成三个，训练了一个小时（也是没跑完），测试了一下，可以全部识别出来了：
 
-![image.png](http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/a3090c496957287e049199bd5110e939.png)
+![image.png](/css/images/1662520255068-11.png)
 
 ## 最终结论
 
