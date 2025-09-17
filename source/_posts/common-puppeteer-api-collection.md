@@ -4,7 +4,7 @@ date: 2017-12-05 14:51:00
 tags: [Puppeteer, 测试, 端对端测试, e2e]
 ---
 
-上篇博客我们讲解了[《使用 Jest 与 Puppeteer 来进行端对端测试》](http://www.liuyiqi.cn/2017/12/05/e2e-testing-with-jest-and-puppeteer/)，但内容偏向于“快速开始”这种风格，并不涉及一些具体的、实用的操作，所以本篇博客将会补充这一点，即，总结一下端对端测试中常用的 Puppeteer 操作，比如模拟用户输入、执行 JavaScript 脚本、获取某个 DOM 节点中的文本等。
+上篇博客我们讲解了[《使用 Jest 与 Puppeteer 来进行端对端测试》](https://lewis617.github.io/2017/12/05/e2e-testing-with-jest-and-puppeteer/)，但内容偏向于“快速开始”这种风格，并不涉及一些具体的、实用的操作，所以本篇博客将会补充这一点，即，总结一下端对端测试中常用的 Puppeteer 操作，比如模拟用户输入、执行 JavaScript 脚本、获取某个 DOM 节点中的文本等。
 
 <!--more-->
 
@@ -192,4 +192,4 @@ test('expect main-nav-link is 主页,归档,关于我', async () => {
 
 ## 更多测试文章：
 
-<http://www.liuyiqi.cn/tags/%E6%B5%8B%E8%AF%95/>
+<https://lewis617.github.io/tags/%E6%B5%8B%E8%AF%95/>

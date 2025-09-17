@@ -6,7 +6,7 @@ tags: [测试, 端对端测试, e2e, Puppeteer]
 
 今天，我们要讲的是如何在端对端测试中模拟 HTTP 请求。这个技术在复杂系统中非常实用，让我们一睹为快。
 
-> 注意，本文是给有一定端对端测试经验的测试工程师或前端工程师看的，如果你对端对端测试一无所知，请先阅读我之前写的[关于端对端测试的文章](http://www.liuyiqi.cn/tags/%E7%AB%AF%E5%AF%B9%E7%AB%AF%E6%B5%8B%E8%AF%95/)。
+> 注意，本文是给有一定端对端测试经验的测试工程师或前端工程师看的，如果你对端对端测试一无所知，请先阅读我之前写的[关于端对端测试的文章](https://lewis617.github.io/tags/%E7%AB%AF%E5%AF%B9%E7%AB%AF%E6%B5%8B%E8%AF%95/)。
 
 <!--more-->
 
@@ -142,4 +142,4 @@ page.on('request', request => {
 
 ## 更多测试文章：
 
-<http://www.liuyiqi.cn/tags/%E6%B5%8B%E8%AF%95/>
+<https://lewis617.github.io/tags/%E6%B5%8B%E8%AF%95/>

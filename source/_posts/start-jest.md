@@ -109,8 +109,8 @@ https://facebook.github.io/jest/
 
 示例代码：<https://github.com/lewis617/javascript-datastructures-algorithms>
 
-目录：<http://www.liuyiqi.cn/tags/数据结构与算法/>
+目录：<https://lewis617.github.io/tags/数据结构与算法/>
 
 ## 更多测试文章：
 
-<http://www.liuyiqi.cn/tags/%E6%B5%8B%E8%AF%95/>
+<https://lewis617.github.io/tags/%E6%B5%8B%E8%AF%95/>

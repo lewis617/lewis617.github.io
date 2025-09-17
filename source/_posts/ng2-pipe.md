@@ -174,7 +174,7 @@ export class FetchJsonPipe  implements PipeTransform {
 
 示例代码：<https://github.com/lewis617/angular2-tutorial>
 
-目录：<http://www.liuyiqi.cn/tags/Angular2/>
+目录：<https://lewis617.github.io/tags/Angular2/>
 
 
 

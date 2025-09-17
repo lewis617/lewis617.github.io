@@ -233,4 +233,4 @@ expect(fourSum([-2, -1, -1, 1, 1, 2, 2], 0)).toEqual([[-2, -1, 1, 2], [-1, -1, 1
 
 示例代码：<https://github.com/lewis617/javascript-datastructures-algorithms>
 
-目录：<http://www.liuyiqi.cn/tags/数据结构与算法/>
+目录：<https://lewis617.github.io/tags/数据结构与算法/>

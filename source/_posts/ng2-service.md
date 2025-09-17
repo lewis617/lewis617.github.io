@@ -200,5 +200,5 @@ constructor(private _heroService: HeroService) { }
 
 # 教程示例代码及目录
 
-http://www.liuyiqi.cn/2016/12/25/angular2-tutorial-catalog/
+https://lewis617.github.io/2016/12/25/angular2-tutorial-catalog/
 

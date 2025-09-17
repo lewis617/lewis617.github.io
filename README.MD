@@ -1,3 +1,3 @@
 # 个人博客
 
-http://liuyiqi.cn/
+https://lewis617.github.io/

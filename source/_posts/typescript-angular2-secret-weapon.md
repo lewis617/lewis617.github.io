@@ -130,4 +130,4 @@ TypeScript中有个很酷的特性就是工具支持，因为我们可以以此�
 
 示例代码：<https://github.com/lewis617/angular2-tutorial>
 
-目录：<http://www.liuyiqi.cn/tags/Angular2/>
+目录：<https://lewis617.github.io/tags/Angular2/>

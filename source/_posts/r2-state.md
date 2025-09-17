@@ -85,4 +85,4 @@ React组件就像是个婴儿，Redux就像是奶妈：
 
 示例代码：<https://github.com/lewis617/react-redux-tutorial>
 
-目录：<http://www.liuyiqi.cn/tags/React/>
+目录：<https://lewis617.github.io/tags/React/>

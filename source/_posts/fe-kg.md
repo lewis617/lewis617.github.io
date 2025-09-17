@@ -6,7 +6,7 @@ tags: [前端体系, 数据结构与算法, 知识图谱]
 
 网络上有不少所谓的“前端知识图谱”，其实只是一个前端“思维导图”，从数据结构上来说是“树”，而不是“图”。而今天笔者要介绍的是真正的“知识图谱”！图谱的样子如下：
 
-<iframe width="80%" height="300px" src="https://www.liuyiqi.cn/fe-kg/"></iframe>
+<iframe width="80%" height="300px" src="https://lewis617.github.io/fe-kg/"></iframe>
 
 <!--more-->
 
@@ -20,7 +20,7 @@ tags: [前端体系, 数据结构与算法, 知识图谱]
 - 支持拖动节点。
 - 支持高亮相邻节点/边。
 
-地址：<https://www.liuyiqi.cn/fe-kg/>
+地址：<https://lewis617.github.io/fe-kg/>
 
 ## 为何要做前端知识图谱？
 

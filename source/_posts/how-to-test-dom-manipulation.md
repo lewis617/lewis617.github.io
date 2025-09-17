@@ -4,7 +4,7 @@ date: 2017-11-09 11:05:00
 tags: [DOM, 单元测试, 测试]
 ---
 
-前几天写了一篇博客：[《使用 JavaScript 批量获取微博评论》](http://www.liuyiqi.cn/2017/11/03/use-js-to-get-weibo-comments/)。今天我们来学习如何测试我们之前编写的代码。从本质上来说，我们今天要学习的是如何测试 DOM 操作类的 JS 代码。你可以在这里获取测试代码：
+前几天写了一篇博客：[《使用 JavaScript 批量获取微博评论》](https://lewis617.github.io/2017/11/03/use-js-to-get-weibo-comments/)。今天我们来学习如何测试我们之前编写的代码。从本质上来说，我们今天要学习的是如何测试 DOM 操作类的 JS 代码。你可以在这里获取测试代码：
 
 <https://github.com/lewis617/practical-js/blob/master/src/weiboBackup.test.js>
 
@@ -108,7 +108,7 @@ expect(textArray).toEqual([
   ]);
 ```
 
-> 关于断言等测试的基础知识，如果你不了解，请看我之前写的 [《Jest 单元测试入门》](http://www.liuyiqi.cn/2017/02/15/start-jest/)。
+> 关于断言等测试的基础知识，如果你不了解，请看我之前写的 [《Jest 单元测试入门》](https://lewis617.github.io/2017/02/15/start-jest/)。
 
 最后我们将上述代码包在 `test` 函数中，这个函数用于打包一个测试用例，并附带测试用例说明：
 
