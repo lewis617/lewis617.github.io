@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>端对端测试中常用的 Puppeteer 操作总结 | 刘一奇的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="google-site-verification" content="pGU1zAlgx4MyYfhiix_1nJzPw60bF-dscJn6KBIm7dU" />
+  <meta name="description" content="上篇博客我们讲解了《使用 Jest 与 Puppeteer 来进行端对端测试》，但内容偏向于“快速开始”这种风格，并不涉及一些具体的、实用的操作，所以本篇博客将会补充这一点，即，总结一下端对端测试中常用的 Puppeteer 操作，比如模拟用户输入、执行 JavaScript 脚本、获取某个 DOM 节点中的文本等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="端对端测试中常用的 Puppeteer 操作总结">
+<meta property="og:url" content="https://lewis617.github.io/2017/12/05/common-puppeteer-api-collection/index.html">
+<meta property="og:site_name" content="刘一奇的个人博客">
+<meta property="og:description" content="上篇博客我们讲解了《使用 Jest 与 Puppeteer 来进行端对端测试》，但内容偏向于“快速开始”这种风格，并不涉及一些具体的、实用的操作，所以本篇博客将会补充这一点，即，总结一下端对端测试中常用的 Puppeteer 操作，比如模拟用户输入、执行 JavaScript 脚本、获取某个 DOM 节点中的文本等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lewis617.github.io/css/images/3.gif">
+<meta property="og:image" content="https://lewis617.github.io/css/images/1.gif">
+<meta property="article:published_time" content="2017-12-05T06:51:00.000Z">
+<meta property="article:modified_time" content="2026-01-19T13:34:16.244Z">
+<meta property="article:author" content="刘一奇">
+<meta property="article:tag" content="测试">
+<meta property="article:tag" content="Puppeteer">
+<meta property="article:tag" content="端对端测试">
+<meta property="article:tag" content="e2e">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lewis617.github.io/css/images/3.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="刘一奇的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- <link rel="stylesheet" href="/css/jquery-disqus-proxy.css"/> -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">刘一奇的个人博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于我</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://lewis617.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-common-puppeteer-api-collection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/05/common-puppeteer-api-collection/" class="article-date">
+  <time datetime="2017-12-05T06:51:00.000Z" itemprop="datePublished">2017-12-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      端对端测试中常用的 Puppeteer 操作总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上篇博客我们讲解了<a href="https://lewis617.github.io/2017/12/05/e2e-testing-with-jest-and-puppeteer/">《使用 Jest 与 Puppeteer 来进行端对端测试》</a>，但内容偏向于“快速开始”这种风格，并不涉及一些具体的、实用的操作，所以本篇博客将会补充这一点，即，总结一下端对端测试中常用的 Puppeteer 操作，比如模拟用户输入、执行 JavaScript 脚本、获取某个 DOM 节点中的文本等。</p>
+<span id="more"></span>
+
+<h2 id="让所有操作可见"><a href="#让所有操作可见" class="headerlink" title="让所有操作可见"></a>让所有操作可见</h2><p>还记得上篇博客中的端对端测试的动图演示吗？</p>
+<p><img src="/css/images/3.gif"></p>
+<p>想实现这个效果，就需要将 Puppeteer 的 <code>headless</code> 选项设为 <code>false</code>，并将 <code>slowMo</code> 设为 20-100 中的某个值，前者使得所有浏览器自动化操作可见，后者控制了动作之间的间隔，使其变慢，从而通过人眼可以看清每步操作。示例代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">    <span class="attr">headless</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">slowMo</span>: <span class="number">20</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="导航到某个页面"><a href="#导航到某个页面" class="headerlink" title="导航到某个页面"></a>导航到某个页面</h2><p>这个操作太常用了！第一步是启动浏览器，那么第二步就是导航到某个页面，代码示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;https://baidu.com&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会开启一个新页面，并将其导航到 <code>https://baidu.com</code>。</p>
+<h2 id="等待某个-DOM-节点出现"><a href="#等待某个-DOM-节点出现" class="headerlink" title="等待某个 DOM 节点出现"></a>等待某个 DOM 节点出现</h2><p>在进行某些页面操作前，我们必须要等待指定的 DOM 加载完成后才能操作，比如，一个 Input 没有加载出来时，你是无法在里面输入字符的等等。在 Puppeteer 中，你可以使用 <code>page.waitForSelector</code> 和选择器来等待某个 DOM 节点出现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> page.<span class="title function_">waitForSelector</span>(<span class="string">&#x27;#loginForm&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会等待 ID 为 <code>loginForm</code> 的节点出现。</p>
+<h2 id="等待几毫秒"><a href="#等待几毫秒" class="headerlink" title="等待几毫秒"></a>等待几毫秒</h2><p>有时候，你找不到某个特定的时刻，只能通过时间间隔来确定，那么此时你可以使用 <code>page.waitFor(number)</code> 来实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> page.<span class="title function_">waitFor</span>(<span class="number">500</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会等待 500 毫秒。</p>
+<h2 id="等待某个-JavaScript-函数返回-true"><a href="#等待某个-JavaScript-函数返回-true" class="headerlink" title="等待某个 JavaScript 函数返回 true"></a>等待某个 JavaScript 函数返回 true</h2><p>有时候，你需要等待某个复杂的时刻，这个时刻只能通过一些复杂的 JavaScript 函数来判断，那么此时你可以使用 <code>page.waitFor(Function)</code> 来实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> page.<span class="title function_">waitFor</span>(<span class="function">() =&gt;</span> !<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.ant-spin.ant-spin-spinning&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会等待 Antd 中的旋转图标消失。</p>
+<h2 id="向某个-Input-中输入字符"><a href="#向某个-Input-中输入字符" class="headerlink" title="向某个 Input 中输入字符"></a>向某个 Input 中输入字符</h2><p>为了模拟用户登陆或仅仅就是输入某个表单，我们经常会向某个 Input 中输入字符，那么我们可以使用这个方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> page.<span class="title function_">type</span>(<span class="string">&#x27;#username&#x27;</span>, <span class="string">&#x27;lewis&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上述代码向 ID 为 <code>username</code> 的 Input 中输入了 <code>lewis</code>。值得一提的是，该方法还会触发 Input 的 <code>keydown</code>、<code>keypress</code>, 和 <code>keyup</code> 事件，所以如果你有该事件的相关功能，也会被测试到哦，是不是很强大？</p>
+<h2 id="点击某个节点"><a href="#点击某个节点" class="headerlink" title="点击某个节点"></a>点击某个节点</h2><p>在 Puppeteer 中模拟点击某个节点，非常简单，只需要：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> page.<span class="title function_">click</span>(<span class="string">&#x27;#btn-submit&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上述代码点击了 ID 为 <code>btn-submit</code> 的节点。</p>
+<h2 id="在浏览器中执行一段-JavaScript-代码"><a href="#在浏览器中执行一段-JavaScript-代码" class="headerlink" title="在浏览器中执行一段 JavaScript 代码"></a>在浏览器中执行一段 JavaScript 代码</h2><p>有时候我们需要在浏览器中执行一段 JavaScript 代码，此时你可以这样写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">page.<span class="title function_">evaluate</span>(<span class="function">() =&gt;</span> <span class="title function_">alert</span>(<span class="string">&#x27;1&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会在浏览器执行 <code>alert(&#39;1&#39;)</code>。</p>
+<h2 id="获取某一个节点的某个属性"><a href="#获取某一个节点的某个属性" class="headerlink" title="获取某一个节点的某个属性"></a>获取某一个节点的某个属性</h2><p>有时候我们需要获取某个 Input 的 <code>value</code>，某个链接的 <code>href</code>，某个节点的文本 <code>textContent</code>，或者 <code>outerHTML</code>，那么你可以使用这个方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> searchValue = <span class="keyword">await</span> page.$eval(<span class="string">&#x27;#search&#x27;</span>, <span class="function"><span class="params">el</span> =&gt;</span> el.<span class="property">value</span>);</span><br><span class="line"><span class="keyword">const</span> preloadHref = <span class="keyword">await</span> page.$eval(<span class="string">&#x27;link[rel=preload]&#x27;</span>, <span class="function"><span class="params">el</span> =&gt;</span> el.<span class="property">href</span>);</span><br><span class="line"><span class="keyword">const</span> text = <span class="keyword">await</span> page.$eval(<span class="string">&#x27;.text&#x27;</span>, <span class="function"><span class="params">el</span> =&gt;</span> el.<span class="property">textContent</span>);</span><br><span class="line"><span class="keyword">const</span> html = <span class="keyword">await</span> page.$eval(<span class="string">&#x27;.main-container&#x27;</span>, <span class="function"><span class="params">e</span> =&gt;</span> e.<span class="property">outerHTML</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取某一类节点的某个属性集合"><a href="#获取某一类节点的某个属性集合" class="headerlink" title="获取某一类节点的某个属性集合"></a>获取某一类节点的某个属性集合</h2><p>有时候我们需要获取某一类节点的某个属性集合，那么你可以这么写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> textArray = <span class="keyword">await</span> page.$$eval(<span class="string">&#x27;.text&#x27;</span>, <span class="function"><span class="params">els</span> =&gt;</span> <span class="title class_">Array</span>.<span class="title function_">from</span>(els).<span class="title function_">map</span>(<span class="function"><span class="params">el</span> =&gt;</span> el.<span class="property">textContent</span>));</span><br></pre></td></tr></table></figure>
+
+<p>上述代码将页面中所有类为 <code>text</code> 的节点中的文本拼装为数组放到了 <code>textArray</code> 中。</p>
+<p>以上就是 Puppeteer 的一些常用操作，当然仅仅掌握这些是不够的，更多的操作请参考 Puppeteer 的 API 文档：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md">https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md</a></p>
+<h2 id="综合应用小例子"><a href="#综合应用小例子" class="headerlink" title="综合应用小例子"></a>综合应用小例子</h2><p>单个操作讲了这么多，我们来进行一次综合应用吧！我们依次让浏览器进行以下自动化操作：</p>
+<ul>
+<li>打开百度首页</li>
+<li>输入<code>刘一奇的个人博客</code></li>
+<li>点击搜索按钮</li>
+<li>点击第一个搜索项</li>
+<li>进入<code>刘一奇的个人博客</code></li>
+<li>断言新页面的 <code>logo</code> 为<code>刘一奇的个人博客</code></li>
+<li>断言新页面的导航栏包括：<code>主页,归档,关于我</code> 三项</li>
+</ul>
+<p>示例代码： </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/lewis617/fe-test/blob/master/puppeteer-demo/liuyiqi-blog.test.js">https://github.com/lewis617/fe-test/blob/master/puppeteer-demo/liuyiqi-blog.test.js</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">&#x27;puppeteer&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> browser, page;</span><br><span class="line"></span><br><span class="line"><span class="title function_">beforeAll</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">    <span class="attr">headless</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">slowMo</span>: <span class="number">80</span></span><br><span class="line">  &#125;);</span><br><span class="line">  page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">afterAll</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  browser.<span class="title function_">close</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;open baidu page&#x27;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;https://baidu.com&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;search liuiqi\&#x27;s blog&#x27;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">waitForSelector</span>(<span class="string">&#x27;#kw&#x27;</span>);</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">type</span>(<span class="string">&#x27;#kw&#x27;</span>, <span class="string">&#x27;刘一奇的个人博客&#x27;</span>);</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">click</span>(<span class="string">&#x27;#su&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;goto liuyiqi\&#x27;s blog&#x27;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">waitForSelector</span>(<span class="string">&#x27;h3.t &gt; a&#x27;</span>);</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">click</span>(<span class="string">&#x27;h3.t:nth-of-type(1) &gt; a&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> pages = <span class="keyword">await</span> browser.<span class="title function_">pages</span>();</span><br><span class="line">  page = pages.<span class="title function_">pop</span>();</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">bringToFront</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;expect logo is 刘一奇的个人博客&#x27;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">waitForSelector</span>(<span class="string">&#x27;#logo&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> text = <span class="keyword">await</span> page.$eval(<span class="string">&#x27;#logo&#x27;</span>, <span class="function"><span class="params">el</span> =&gt;</span> el.<span class="property">textContent</span>)</span><br><span class="line">  <span class="title function_">expect</span>(text).<span class="title function_">toBe</span>(<span class="string">&#x27;刘一奇的个人博客&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;expect main-nav-link is 主页,归档,关于我&#x27;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> textArray = <span class="keyword">await</span> page.$$eval(<span class="string">&#x27;.main-nav-link&#x27;</span>, <span class="function"><span class="params">els</span> =&gt;</span> <span class="title class_">Array</span>.<span class="title function_">from</span>(els).<span class="title function_">map</span>(<span class="function"><span class="params">el</span> =&gt;</span> el.<span class="property">textContent</span>));</span><br><span class="line">  <span class="title function_">expect</span>(textArray).<span class="title function_">toEqual</span>([<span class="string">&#x27;主页&#x27;</span>, <span class="string">&#x27;归档&#x27;</span>, <span class="string">&#x27;关于我&#x27;</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>效果图：</p>
+<p><img src="/css/images/1.gif"></p>
+<p>至此，端对端测试中常用的 Puppeteer 操作总结就讲完了。有更多操作请查阅官网文档，或给我发邮件，或在本文下方评论。</p>
+<h2 id="更多测试文章："><a href="#更多测试文章：" class="headerlink" title="更多测试文章："></a>更多测试文章：</h2><p><a href="https://lewis617.github.io/tags/%E6%B5%8B%E8%AF%95/">https://lewis617.github.io/tags/%E6%B5%8B%E8%AF%95/</a></p>
+
+        
+          <!-- 版权声明节点 -->
+<div class="copyright">
+  <div>
+    <strong>本文作者：</strong>
+    <a href="/about/" title="欢迎访问  的博客">
+      
+    </a>
+  </div>
+  <div>
+    <strong>本文出处：</strong>
+    <a href="/" title="刘一奇的个人博客">
+      刘一奇的个人博客
+    </a>
+  </div>
+  <div>
+    <strong>本文链接：</strong>
+    <a href="https://lewis617.github.io/2017/12/05/common-puppeteer-api-collection/" title="端对端测试中常用的 Puppeteer 操作总结">
+          https://lewis617.github.io/2017/12/05/common-puppeteer-api-collection/
+        </a>
+  </div>
+  <div>
+    <strong>发布时间：</strong>
+    2017年12月5日 - 14时12分
+  </div>
+  <div>
+    <strong>版权声明： </strong> 本文由
+     原创，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="license" target="_blank">保留署名-非商业性使用-禁止演绎 4.0-国际许可协议</a> </br>转载请保留以上声明信息！
+  </div>
+</div>
+          
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://lewis617.github.io/2017/12/05/common-puppeteer-api-collection/" data-id="cml0n0t5e0006voj6hbikap34" class="article-share-link">共享</a>
+      <!-- 
+        <a href="https://lewis617.github.io/2017/12/05/common-puppeteer-api-collection/#disqus_proxy_thread" class="article-comment-link">留言</a>
+       -->
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Puppeteer/" rel="tag">Puppeteer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/e2e/" rel="tag">e2e</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag">测试</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AB%AF%E5%AF%B9%E7%AB%AF%E6%B5%8B%E8%AF%95/" rel="tag">端对端测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/18/how-to-mock-http-in-e2e-testing/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          如何在端对端测试中模拟 HTTP 请求
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/05/e2e-testing-with-jest-and-puppeteer/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">使用 Jest 与 Puppeteer 来进行端对端测试</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- 
+  <section id="comments">
+    <div id="disqus_thread"></div>
+    <div id="disqus_proxy_thread"></div>
+  </section>
+  <script>
+    window.disqusProxy = {
+      shortname: 'lewis617s-blog',
+      username: 'lewis617',
+      server: 'disqus-proxy.herokuapp.com',
+      adminAvatar: '/css/images/1556699732171-0.jpg',
+      identifier: '2017/12/05/common-puppeteer-api-collection/',
+    };
+    window.disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.disqusProxy.identifier;
+    };
+  </script>
+ -->
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">系列文章</h3>
+  <div class="widget">
+    <ul>
+      <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/liu-yi-si-15-89/posts">前端智能化系列教程</a></li>
+      <li><a href="/tags/React/">React 与 Redux 系列教程</a></li>
+      <li><a href="/tags/Angular2/">Angular2 系列教程</a></li>
+      <li><a href="/tags/数据结构与算法/">JavaScript 版数据结构与算法</a></li>
+      <li><a href="/tags/测试/">前端测试系列教程</a></li>
+      <li><a href="/tags/技术讲座/">技术讲座中文字幕集合</a></li> 
+      <li><a href="/tags/JavaScript-基础/">JavaScript 基础</a></li> 
+      <li><a href="/tags/CSS-基础/">CSS 基础</a></li> 
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Angular/" style="font-size: 12px;">Angular</a> <a href="/tags/Angular2/" style="font-size: 17px;">Angular2</a> <a href="/tags/Appium/" style="font-size: 11px;">Appium</a> <a href="/tags/BFC/" style="font-size: 10px;">BFC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Bootstrap/" style="font-size: 10px;">Bootstrap</a> <a href="/tags/CSS-%E5%9F%BA%E7%A1%80/" style="font-size: 12px;">CSS 基础</a> <a href="/tags/Clojure/" style="font-size: 10px;">Clojure</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Fitbit/" style="font-size: 10px;">Fitbit</a> <a href="/tags/Flask/" style="font-size: 11px;">Flask</a> <a href="/tags/Gulp/" style="font-size: 10px;">Gulp</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/Immutable-js/" style="font-size: 10px;">Immutable.js</a> <a href="/tags/JS-%E8%B0%83%E8%AF%95/" style="font-size: 10px;">JS 调试</a> <a href="/tags/JSX/" style="font-size: 10px;">JSX</a> <a href="/tags/JavaScript-%E5%9F%BA%E7%A1%80/" style="font-size: 14px;">JavaScript 基础</a> <a href="/tags/Jest/" style="font-size: 11px;">Jest</a> <a href="/tags/Jinja2/" style="font-size: 10px;">Jinja2</a> <a href="/tags/Karma/" style="font-size: 11px;">Karma</a> <a href="/tags/LeetCode/" style="font-size: 14px;">LeetCode</a> <a href="/tags/Miri-%E5%83%B5%E5%B0%B8%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">Miri 僵尸网络</a> <a href="/tags/Mori/" style="font-size: 10px;">Mori</a> <a href="/tags/Node/" style="font-size: 11px;">Node</a> <a href="/tags/Object-Detection-API/" style="font-size: 10px;">Object Detection API</a> <a href="/tags/Preact/" style="font-size: 10px;">Preact</a> <a href="/tags/Puppeteer/" style="font-size: 12px;">Puppeteer</a> <a href="/tags/React/" style="font-size: 19px;">React</a> <a href="/tags/Redux/" style="font-size: 18px;">Redux</a> <a href="/tags/Reflux/" style="font-size: 10px;">Reflux</a> <a href="/tags/RequireJs/" style="font-size: 13px;">RequireJs</a> <a href="/tags/RxJS/" style="font-size: 11px;">RxJS</a> <a href="/tags/SVG/" style="font-size: 10px;">SVG</a> <a href="/tags/SVG-SMIL-animation/" style="font-size: 10px;">SVG SMIL animation</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/Trie-%E6%A0%91/" style="font-size: 10px;">Trie 树</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Universal/" style="font-size: 10px;">Universal</a> <a href="/tags/Webpack/" style="font-size: 11px;">Webpack</a> <a href="/tags/cheerio/" style="font-size: 10px;">cheerio</a> <a href="/tags/debounce/" style="font-size: 10px;">debounce</a> <a href="/tags/e2e/" style="font-size: 12px;">e2e</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/left-pad/" style="font-size: 10px;">left-pad</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/practical-js/" style="font-size: 11px;">practical-js</a> <a href="/tags/r-js/" style="font-size: 10px;">r.js</a> <a href="/tags/redux-amrc/" style="font-size: 10px;">redux-amrc</a> <a href="/tags/render-react-components/" style="font-size: 10px;">render-react-components</a> <a href="/tags/superagent/" style="font-size: 10px;">superagent</a> <a href="/tags/throttle/" style="font-size: 10px;">throttle</a> <a href="/tags/%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">不可变数据结构</a> <a href="/tags/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" style="font-size: 10px;">事件循环</a> <a href="/tags/%E4%BA%8C%E5%80%BC%E5%8C%96/" style="font-size: 10px;">二值化</a> <a href="/tags/%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" style="font-size: 10px;">任务队列</a> <a href="/tags/%E4%BC%A6%E7%90%86%E5%AD%A6/" style="font-size: 10px;">伦理学</a> <a href="/tags/%E5%81%8F%E7%A7%BB%E5%AE%BD%E9%AB%98%E8%B7%9D%E7%A6%BB/" style="font-size: 10px;">偏移宽高距离</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11px;">函数式编程</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E4%BD%93%E7%B3%BB/" style="font-size: 10px;">前端体系</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">前端面试</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 14px;">单元测试</a> <a href="/tags/%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">原型继承</a> <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/" style="font-size: 10px;">原型链</a> <a href="/tags/%E5%8F%AF%E8%A7%86%E5%AE%BD%E9%AB%98/" style="font-size: 10px;">可视宽高</a> <a href="/tags/%E5%9B%BE%E4%B9%A6/" style="font-size: 10px;">图书</a> <a href="/tags/%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0/" style="font-size: 10px;">块级元素</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 10px;">字符编码</a> <a href="/tags/%E5%AE%8F%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">宏任务</a> <a href="/tags/%E5%AF%84%E7%94%9F%E5%BC%8F%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">寄生式组合继承</a> <a href="/tags/%E5%BE%AE%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">微任务</a> <a href="/tags/%E6%80%A7%E8%83%BD/" style="font-size: 10px;">性能</a> <a href="/tags/%E6%89%A7%E8%A1%8C%E6%A0%88/" style="font-size: 10px;">执行栈</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E8%AE%B2%E5%BA%A7/" style="font-size: 15px;">技术讲座</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" style="font-size: 20px;">数据结构与算法</a> <a href="/tags/%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0/" style="font-size: 10px;">替换元素</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">机器学习</a> <a href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">构造函数继承</a> <a href="/tags/%E6%9F%AF%E9%87%8C%E5%8C%96/" style="font-size: 10px;">柯里化</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 11px;">正则表达式</a> <a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 16px;">测试</a> <a href="/tags/%E6%BB%9A%E5%8A%A8%E5%AE%BD%E9%AB%98%E8%B7%9D%E7%A6%BB/" style="font-size: 10px;">滚动宽高距离</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" style="font-size: 10px;">物联网</a> <a href="/tags/%E7%94%B5%E8%BD%A6%E9%97%AE%E9%A2%98/" style="font-size: 10px;">电车问题</a> <a href="/tags/%E7%9C%81%E7%95%A5%E5%8F%B7/" style="font-size: 10px;">省略号</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%AB%AF%E5%AF%B9%E7%AB%AF%E6%B5%8B%E8%AF%95/" style="font-size: 12px;">端对端测试</a> <a href="/tags/%E7%BA%AF%E5%87%BD%E6%95%B0/" style="font-size: 10px;">纯函数</a> <a href="/tags/%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">组合继承</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" style="font-size: 11px;">自动化测试</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E6%B1%BD%E8%BD%A6/" style="font-size: 10px;">自动驾驶汽车</a> <a href="/tags/%E8%99%9A%E6%8B%9FDOM/" style="font-size: 10px;">虚拟DOM</a> <a href="/tags/%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0/" style="font-size: 10px;">行内元素</a> <a href="/tags/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" style="font-size: 10px;">贝塞尔曲线</a> <a href="/tags/%E8%B7%A8%E5%9F%9F/" style="font-size: 10px;">跨域</a> <a href="/tags/%E9%9D%9E%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0/" style="font-size: 10px;">非替换元素</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">面向对象编程</a> <a href="/tags/%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">黑盒测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/18/fe-kg/">“真”前端知识图谱上线了</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-async/">JavaScript 基础：异步</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-inherit/">JavaScript 基础：继承</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-debounce-throttle/">JavaScript 基础：防抖与节流</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-top-left-width-height/">JavaScript 基础：偏移宽高距离、滚动宽高距离、可视宽高</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+	<h3 class="widget-title">我的其他小站</h3>
+	<div class="widget">
+		<ul>
+			<li><a href="/scroll-pages" target="_blank">滚动吉他谱</a></li>
+			<li><a href="/books-tree" target="_blank">技术书籍可视化</a></li>
+			<li><a href="/fe-kg" target="_blank">前端知识图谱</a></li>
+		</ul>
+	</div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+	
+	<div class="outer">
+		<div id="footer-info" class="inner">
+      &copy; 2026 刘一奇
+		</div>
+	</div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于我</a>
+  
+</nav>
+    <script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/blockies-identicon@0.1.0/blockies.min.js"></script>
+<!-- <script src="/js/jquery-disqus-proxy.js?v=0.1.1"></script> -->
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-88398388-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+</body>
+</html>

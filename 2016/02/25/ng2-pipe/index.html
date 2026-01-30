@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Angular2 系列教程（六）两种pipe：函数式编程与面向对象编程 | 刘一奇的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="google-site-verification" content="pGU1zAlgx4MyYfhiix_1nJzPw60bF-dscJn6KBIm7dU" />
+  <meta name="description" content="今天，我们要讲的是ng2的pipe这个知识点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular2 系列教程（六）两种pipe：函数式编程与面向对象编程">
+<meta property="og:url" content="https://lewis617.github.io/2016/02/25/ng2-pipe/index.html">
+<meta property="og:site_name" content="刘一奇的个人博客">
+<meta property="og:description" content="今天，我们要讲的是ng2的pipe这个知识点。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lewis617.github.io/css/images/66.jpg">
+<meta property="og:image" content="https://lewis617.github.io/css/images/67.jpg">
+<meta property="article:published_time" content="2016-02-24T19:28:00.000Z">
+<meta property="article:modified_time" content="2026-01-19T13:34:16.246Z">
+<meta property="article:author" content="刘一奇">
+<meta property="article:tag" content="Angular2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lewis617.github.io/css/images/66.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="刘一奇的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- <link rel="stylesheet" href="/css/jquery-disqus-proxy.css"/> -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">刘一奇的个人博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于我</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://lewis617.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ng2-pipe" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/25/ng2-pipe/" class="article-date">
+  <time datetime="2016-02-24T19:28:00.000Z" itemprop="datePublished">2016-02-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Angular2 系列教程（六）两种pipe：函数式编程与面向对象编程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天，我们要讲的是ng2的pipe这个知识点。</p>
+<span id="more"></span>
+
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p><img src="/css/images/66.jpg"></p>
+<p>这个例子包含两个pipe，<del>一个是stateful，一个是stateless</del>，是直接复制官方的例子。（最新的官网文档已经将其改为了pure和impure，并移除了面向对象的比喻，个人认为较为准确，请以最新的官网文档为参考！）</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/lewis617/angular2-tutorial/tree/gh-pages/pipes">源代码</a></p>
+<h2 id="stateless-pipe"><a href="#stateless-pipe" class="headerlink" title="stateless pipe"></a>stateless pipe</h2><p>pipe就是ng1中的filter。先看看内建pipe吧：</p>
+<ul>
+<li><code>currency</code></li>
+<li><code>date</code></li>
+<li><code>uppercase</code></li>
+<li><code>json</code></li>
+<li><code>limitTo</code></li>
+<li><code>lowercase</code></li>
+<li><code>async</code></li>
+<li><code>decimal</code></li>
+<li><code>percent</code></li>
+</ul>
+<p>无需编写直接用！今天说了太多”直接用”哈哈！</p>
+<p>pipe分为两种，一种是stateful，一种是stateless。我们先说stateless，stateless就是使用纯函数，不记住任何数据，也不会带来任何副作用。<code>DatePipe</code>就是stateless，我们再写个计算次方的pipe吧:</p>
+<p>app&#x2F;stateless&#x2F;exponential-strength.pipe.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Pipe</span>, <span class="title class_">PipeTransform</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/core&#x27;</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Raise the value exponentially</span></span><br><span class="line"><span class="comment"> * Takes an exponent argument that defaults to 1.</span></span><br><span class="line"><span class="comment"> * Usage:</span></span><br><span class="line"><span class="comment"> *   value | exponentialStrength:exponent</span></span><br><span class="line"><span class="comment"> * Example:</span></span><br><span class="line"><span class="comment"> *   &#123;&#123; 2 |  exponentialStrength:10&#125;&#125;</span></span><br><span class="line"><span class="comment"> *   formats to: 1024</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@Pipe</span>(&#123;<span class="attr">name</span>: <span class="string">&#x27;exponentialStrength&#x27;</span>&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">ExponentialStrengthPipe</span> <span class="keyword">implements</span> <span class="title class_">PipeTransform</span> &#123;</span><br><span class="line">  <span class="title function_">transform</span>(<span class="attr">value</span>: <span class="built_in">number</span>, <span class="attr">args</span>: <span class="built_in">string</span>[]) : <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">pow</span>(value, <span class="built_in">parseInt</span>(args[<span class="number">0</span>] || <span class="string">&#x27;1&#x27;</span>, <span class="number">10</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很简单，计算某个值的某次方，比如2的10次方：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; <span class="number">2</span> | <span class="attr">exponentialStrength</span>:<span class="number">10</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>写个模板测试下：</p>
+<p>app&#x2F;stateless&#x2F;power-booster.component.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Component</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">ExponentialStrengthPipe</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;./exponential-strength.pipe&#x27;</span>;</span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;power-booster&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h2&gt;Power Booster&lt;/h2&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;</span></span><br><span class="line"><span class="string">      Super power boost: &#123;&#123;2 | exponentialStrength: 10&#125;&#125;</span></span><br><span class="line"><span class="string">    &lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="attr">pipes</span>: [<span class="title class_">ExponentialStrengthPipe</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">PowerBooster</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>注入<code>pipes: [ExponentialStrengthPipe]</code>，然后直接用！</p>
+<h2 id="stateful-pipe"><a href="#stateful-pipe" class="headerlink" title="stateful pipe"></a>stateful pipe</h2><p>先看一个stateful pipe的例子吧：</p>
+<p>app&#x2F;stateful&#x2F;fetch-json.pipe.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">var</span> fetch;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Pipe</span>, <span class="title class_">PipeTransform</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/core&#x27;</span>;</span><br><span class="line"><span class="meta">@Pipe</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;fetch&#x27;</span>,</span><br><span class="line">  <span class="attr">pure</span>: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">FetchJsonPipe</span>  <span class="keyword">implements</span> <span class="title class_">PipeTransform</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="attr">fetchedValue</span>: <span class="built_in">any</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="attr">fetchPromise</span>: <span class="title class_">Promise</span>&lt;<span class="built_in">any</span>&gt;;</span><br><span class="line">  <span class="title function_">transform</span>(<span class="attr">value</span>: <span class="built_in">string</span>, <span class="attr">args</span>: <span class="built_in">string</span>[]): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">fetchPromise</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">fetchPromise</span> = <span class="title function_">fetch</span>(value)</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function">(<span class="params"><span class="attr">result</span>: <span class="built_in">any</span></span>) =&gt;</span> result.<span class="title function_">json</span>())</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function">(<span class="params"><span class="attr">json</span>: <span class="built_in">any</span></span>)   =&gt;</span> <span class="variable language_">this</span>.<span class="property">fetchedValue</span> = json);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">fetchedValue</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们干了这些事：</p>
+<ol>
+<li>将<code>pure</code>参数设为<code>false</code></li>
+<li>在成员函数<code>transform</code>中，执行<code>fetch</code>请求，将结果赋给<code>this.fetchedValue = json</code>，最后返回结果</li>
+<li>如果<code>this.fetchPromise</code>这个成员变量已经被定义过，则直接返回成员变量<code>fetchedValue</code></li>
+</ol>
+<p>写个模板测试下：</p>
+<p>app&#x2F;stateful&#x2F;hero-list.component.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Component</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">FetchJsonPipe</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;./fetch-json.pipe&#x27;</span>;</span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;hero-list&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h4&gt;Heroes from JSON File&lt;/h4&gt;</span></span><br><span class="line"><span class="string">    &lt;div *ngFor=&quot;#hero of (&#x27;/assets/heroes.json&#x27; | fetch) &quot;&gt;</span></span><br><span class="line"><span class="string">      &#123;&#123;hero.name&#125;&#125;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;Heroes as JSON:</span></span><br><span class="line"><span class="string">    &#123;&#123;&#x27;/assets/heroes.json&#x27; | fetch | json&#125;&#125;</span></span><br><span class="line"><span class="string">    &lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="attr">pipes</span>: [<span class="title class_">FetchJsonPipe</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">HeroListComponent</span> &#123;</span><br><span class="line">  <span class="comment">/* I&#x27;ve got nothing to do ;-) */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>&#39;/assets/heroes.json&#39;</code>是我自己编写的json文件，放在了assets里面，因为这是webpack的静态文件地址。</p>
+<p>结果：</p>
+<p><img src="/css/images/67.jpg"></p>
+<h3 id="特性解读"><a href="#特性解读" class="headerlink" title="特性解读"></a>特性解读</h3><blockquote>
+<p>Stateful pipes are conceptually similar to classes in object-oriented<br>programming. They can manage the data they transform. A pipe that creates an<br>HTTP request, stores the response and displays the output, is a stateful pipe.</p>
+</blockquote>
+<p>这是官方对statefule pipe的描述。说是能够创建http请求，存储响应，显示输出的pipe就是stateful pipe。那么stateless pipe不能做这些事吗？我好奇的在stateless pipe中尝试做http请求：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">var</span> fetch;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Pipe</span>, <span class="title class_">PipeTransform</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/core&#x27;</span>;</span><br><span class="line"><span class="meta">@Pipe</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;fetch&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">FetchJsonPipe</span>  <span class="keyword">implements</span> <span class="title class_">PipeTransform</span> &#123;</span><br><span class="line">  <span class="title function_">transform</span>(<span class="attr">value</span>: <span class="built_in">string</span>, <span class="attr">args</span>: <span class="built_in">string</span>[]): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="title function_">fetch</span>(value)</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function">(<span class="params"><span class="attr">result</span>: <span class="built_in">any</span></span>) =&gt;</span> result.<span class="title function_">json</span>())</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function">(<span class="params"><span class="attr">json</span>: <span class="built_in">any</span></span>)   =&gt;</span>  json);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果什么都输出不了！说明当我们需要使用http的时候，或者处理异步的时候，需要使用stateful pipe。<del>这两个pipe的区别也正是”函数式编程”和”面向对象”的区别—-有无状态</del> （使用“有无状态“来区别函数式编程和面向对象编程不够准确！）。</p>
+<hr>
+<h2 id="教程示例代码及目录"><a href="#教程示例代码及目录" class="headerlink" title="教程示例代码及目录"></a>教程示例代码及目录</h2><p>示例代码：<a target="_blank" rel="noopener" href="https://github.com/lewis617/angular2-tutorial">https://github.com/lewis617/angular2-tutorial</a></p>
+<p>目录：<a href="https://lewis617.github.io/tags/Angular2/">https://lewis617.github.io/tags/Angular2/</a></p>
+
+        
+          <!-- 版权声明节点 -->
+<div class="copyright">
+  <div>
+    <strong>本文作者：</strong>
+    <a href="/about/" title="欢迎访问  的博客">
+      
+    </a>
+  </div>
+  <div>
+    <strong>本文出处：</strong>
+    <a href="/" title="刘一奇的个人博客">
+      刘一奇的个人博客
+    </a>
+  </div>
+  <div>
+    <strong>本文链接：</strong>
+    <a href="https://lewis617.github.io/2016/02/25/ng2-pipe/" title="Angular2 系列教程（六）两种pipe：函数式编程与面向对象编程">
+          https://lewis617.github.io/2016/02/25/ng2-pipe/
+        </a>
+  </div>
+  <div>
+    <strong>发布时间：</strong>
+    2016年2月25日 - 03时02分
+  </div>
+  <div>
+    <strong>版权声明： </strong> 本文由
+     原创，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="license" target="_blank">保留署名-非商业性使用-禁止演绎 4.0-国际许可协议</a> </br>转载请保留以上声明信息！
+  </div>
+</div>
+          
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://lewis617.github.io/2016/02/25/ng2-pipe/" data-id="cml0n0t5x002fvoj6b99l7nmj" class="article-share-link">共享</a>
+      <!-- 
+        <a href="https://lewis617.github.io/2016/02/25/ng2-pipe/#disqus_proxy_thread" class="article-comment-link">留言</a>
+       -->
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular2/" rel="tag">Angular2</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/02/29/ng2-service/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          Angular2 系列教程（七）Injectable、Promise、Interface、使用服务
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/02/19/ng2-structural-directive/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Angular2 系列教程（五）Structural directives、再谈组件生命周期</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- 
+  <section id="comments">
+    <div id="disqus_thread"></div>
+    <div id="disqus_proxy_thread"></div>
+  </section>
+  <script>
+    window.disqusProxy = {
+      shortname: 'lewis617s-blog',
+      username: 'lewis617',
+      server: 'disqus-proxy.herokuapp.com',
+      adminAvatar: '/css/images/1556699732171-0.jpg',
+      identifier: '2016/02/25/ng2-pipe/',
+    };
+    window.disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.disqusProxy.identifier;
+    };
+  </script>
+ -->
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">系列文章</h3>
+  <div class="widget">
+    <ul>
+      <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/liu-yi-si-15-89/posts">前端智能化系列教程</a></li>
+      <li><a href="/tags/React/">React 与 Redux 系列教程</a></li>
+      <li><a href="/tags/Angular2/">Angular2 系列教程</a></li>
+      <li><a href="/tags/数据结构与算法/">JavaScript 版数据结构与算法</a></li>
+      <li><a href="/tags/测试/">前端测试系列教程</a></li>
+      <li><a href="/tags/技术讲座/">技术讲座中文字幕集合</a></li> 
+      <li><a href="/tags/JavaScript-基础/">JavaScript 基础</a></li> 
+      <li><a href="/tags/CSS-基础/">CSS 基础</a></li> 
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Angular/" style="font-size: 12px;">Angular</a> <a href="/tags/Angular2/" style="font-size: 17px;">Angular2</a> <a href="/tags/Appium/" style="font-size: 11px;">Appium</a> <a href="/tags/BFC/" style="font-size: 10px;">BFC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Bootstrap/" style="font-size: 10px;">Bootstrap</a> <a href="/tags/CSS-%E5%9F%BA%E7%A1%80/" style="font-size: 12px;">CSS 基础</a> <a href="/tags/Clojure/" style="font-size: 10px;">Clojure</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Fitbit/" style="font-size: 10px;">Fitbit</a> <a href="/tags/Flask/" style="font-size: 11px;">Flask</a> <a href="/tags/Gulp/" style="font-size: 10px;">Gulp</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/Immutable-js/" style="font-size: 10px;">Immutable.js</a> <a href="/tags/JS-%E8%B0%83%E8%AF%95/" style="font-size: 10px;">JS 调试</a> <a href="/tags/JSX/" style="font-size: 10px;">JSX</a> <a href="/tags/JavaScript-%E5%9F%BA%E7%A1%80/" style="font-size: 14px;">JavaScript 基础</a> <a href="/tags/Jest/" style="font-size: 11px;">Jest</a> <a href="/tags/Jinja2/" style="font-size: 10px;">Jinja2</a> <a href="/tags/Karma/" style="font-size: 11px;">Karma</a> <a href="/tags/LeetCode/" style="font-size: 14px;">LeetCode</a> <a href="/tags/Miri-%E5%83%B5%E5%B0%B8%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">Miri 僵尸网络</a> <a href="/tags/Mori/" style="font-size: 10px;">Mori</a> <a href="/tags/Node/" style="font-size: 11px;">Node</a> <a href="/tags/Object-Detection-API/" style="font-size: 10px;">Object Detection API</a> <a href="/tags/Preact/" style="font-size: 10px;">Preact</a> <a href="/tags/Puppeteer/" style="font-size: 12px;">Puppeteer</a> <a href="/tags/React/" style="font-size: 19px;">React</a> <a href="/tags/Redux/" style="font-size: 18px;">Redux</a> <a href="/tags/Reflux/" style="font-size: 10px;">Reflux</a> <a href="/tags/RequireJs/" style="font-size: 13px;">RequireJs</a> <a href="/tags/RxJS/" style="font-size: 11px;">RxJS</a> <a href="/tags/SVG/" style="font-size: 10px;">SVG</a> <a href="/tags/SVG-SMIL-animation/" style="font-size: 10px;">SVG SMIL animation</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/Trie-%E6%A0%91/" style="font-size: 10px;">Trie 树</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Universal/" style="font-size: 10px;">Universal</a> <a href="/tags/Webpack/" style="font-size: 11px;">Webpack</a> <a href="/tags/cheerio/" style="font-size: 10px;">cheerio</a> <a href="/tags/debounce/" style="font-size: 10px;">debounce</a> <a href="/tags/e2e/" style="font-size: 12px;">e2e</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/left-pad/" style="font-size: 10px;">left-pad</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/practical-js/" style="font-size: 11px;">practical-js</a> <a href="/tags/r-js/" style="font-size: 10px;">r.js</a> <a href="/tags/redux-amrc/" style="font-size: 10px;">redux-amrc</a> <a href="/tags/render-react-components/" style="font-size: 10px;">render-react-components</a> <a href="/tags/superagent/" style="font-size: 10px;">superagent</a> <a href="/tags/throttle/" style="font-size: 10px;">throttle</a> <a href="/tags/%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">不可变数据结构</a> <a href="/tags/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" style="font-size: 10px;">事件循环</a> <a href="/tags/%E4%BA%8C%E5%80%BC%E5%8C%96/" style="font-size: 10px;">二值化</a> <a href="/tags/%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" style="font-size: 10px;">任务队列</a> <a href="/tags/%E4%BC%A6%E7%90%86%E5%AD%A6/" style="font-size: 10px;">伦理学</a> <a href="/tags/%E5%81%8F%E7%A7%BB%E5%AE%BD%E9%AB%98%E8%B7%9D%E7%A6%BB/" style="font-size: 10px;">偏移宽高距离</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11px;">函数式编程</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E4%BD%93%E7%B3%BB/" style="font-size: 10px;">前端体系</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">前端面试</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 14px;">单元测试</a> <a href="/tags/%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">原型继承</a> <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/" style="font-size: 10px;">原型链</a> <a href="/tags/%E5%8F%AF%E8%A7%86%E5%AE%BD%E9%AB%98/" style="font-size: 10px;">可视宽高</a> <a href="/tags/%E5%9B%BE%E4%B9%A6/" style="font-size: 10px;">图书</a> <a href="/tags/%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0/" style="font-size: 10px;">块级元素</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 10px;">字符编码</a> <a href="/tags/%E5%AE%8F%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">宏任务</a> <a href="/tags/%E5%AF%84%E7%94%9F%E5%BC%8F%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">寄生式组合继承</a> <a href="/tags/%E5%BE%AE%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">微任务</a> <a href="/tags/%E6%80%A7%E8%83%BD/" style="font-size: 10px;">性能</a> <a href="/tags/%E6%89%A7%E8%A1%8C%E6%A0%88/" style="font-size: 10px;">执行栈</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E8%AE%B2%E5%BA%A7/" style="font-size: 15px;">技术讲座</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" style="font-size: 20px;">数据结构与算法</a> <a href="/tags/%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0/" style="font-size: 10px;">替换元素</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">机器学习</a> <a href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">构造函数继承</a> <a href="/tags/%E6%9F%AF%E9%87%8C%E5%8C%96/" style="font-size: 10px;">柯里化</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 11px;">正则表达式</a> <a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 16px;">测试</a> <a href="/tags/%E6%BB%9A%E5%8A%A8%E5%AE%BD%E9%AB%98%E8%B7%9D%E7%A6%BB/" style="font-size: 10px;">滚动宽高距离</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" style="font-size: 10px;">物联网</a> <a href="/tags/%E7%94%B5%E8%BD%A6%E9%97%AE%E9%A2%98/" style="font-size: 10px;">电车问题</a> <a href="/tags/%E7%9C%81%E7%95%A5%E5%8F%B7/" style="font-size: 10px;">省略号</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%AB%AF%E5%AF%B9%E7%AB%AF%E6%B5%8B%E8%AF%95/" style="font-size: 12px;">端对端测试</a> <a href="/tags/%E7%BA%AF%E5%87%BD%E6%95%B0/" style="font-size: 10px;">纯函数</a> <a href="/tags/%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">组合继承</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" style="font-size: 11px;">自动化测试</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E6%B1%BD%E8%BD%A6/" style="font-size: 10px;">自动驾驶汽车</a> <a href="/tags/%E8%99%9A%E6%8B%9FDOM/" style="font-size: 10px;">虚拟DOM</a> <a href="/tags/%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0/" style="font-size: 10px;">行内元素</a> <a href="/tags/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" style="font-size: 10px;">贝塞尔曲线</a> <a href="/tags/%E8%B7%A8%E5%9F%9F/" style="font-size: 10px;">跨域</a> <a href="/tags/%E9%9D%9E%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0/" style="font-size: 10px;">非替换元素</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">面向对象编程</a> <a href="/tags/%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">黑盒测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/18/fe-kg/">“真”前端知识图谱上线了</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-async/">JavaScript 基础：异步</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-inherit/">JavaScript 基础：继承</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-debounce-throttle/">JavaScript 基础：防抖与节流</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-top-left-width-height/">JavaScript 基础：偏移宽高距离、滚动宽高距离、可视宽高</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+	<h3 class="widget-title">我的其他小站</h3>
+	<div class="widget">
+		<ul>
+			<li><a href="/scroll-pages" target="_blank">滚动吉他谱</a></li>
+			<li><a href="/books-tree" target="_blank">技术书籍可视化</a></li>
+			<li><a href="/fe-kg" target="_blank">前端知识图谱</a></li>
+		</ul>
+	</div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+	
+	<div class="outer">
+		<div id="footer-info" class="inner">
+      &copy; 2026 刘一奇
+		</div>
+	</div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于我</a>
+  
+</nav>
+    <script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/blockies-identicon@0.1.0/blockies.min.js"></script>
+<!-- <script src="/js/jquery-disqus-proxy.js?v=0.1.1"></script> -->
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-88398388-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+</body>
+</html>

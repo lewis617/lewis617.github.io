@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>React 与 Redux 教程（七）自定义Redux中间件 | 刘一奇的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="google-site-verification" content="pGU1zAlgx4MyYfhiix_1nJzPw60bF-dscJn6KBIm7dU" />
+  <meta name="description" content="今天，我们要讲解的是自定义Redux中间件这个知识点。本节内容非常抽象，特别是中间件的定义原理，那多层的函数嵌套和串联，需要极强逻辑思维能力才能完全消化吸收。不过我会多罗嗦几句，所以不用担心。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 与 Redux 教程（七）自定义Redux中间件">
+<meta property="og:url" content="https://lewis617.github.io/2016/02/02/r2-middleware/index.html">
+<meta property="og:site_name" content="刘一奇的个人博客">
+<meta property="og:description" content="今天，我们要讲解的是自定义Redux中间件这个知识点。本节内容非常抽象，特别是中间件的定义原理，那多层的函数嵌套和串联，需要极强逻辑思维能力才能完全消化吸收。不过我会多罗嗦几句，所以不用担心。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lewis617.github.io/css/images/153.jpg">
+<meta property="og:image" content="https://lewis617.github.io/css/images/154.jpg">
+<meta property="og:image" content="https://lewis617.github.io/css/images/155.jpg">
+<meta property="article:published_time" content="2016-02-02T00:20:00.000Z">
+<meta property="article:modified_time" content="2026-01-19T13:34:16.248Z">
+<meta property="article:author" content="刘一奇">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Redux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lewis617.github.io/css/images/153.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="刘一奇的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- <link rel="stylesheet" href="/css/jquery-disqus-proxy.css"/> -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">刘一奇的个人博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于我</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://lewis617.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-r2-middleware" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/02/r2-middleware/" class="article-date">
+  <time datetime="2016-02-02T00:20:00.000Z" itemprop="datePublished">2016-02-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      React 与 Redux 教程（七）自定义Redux中间件
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天，我们要讲解的是自定义Redux中间件这个知识点。本节内容非常抽象，特别是中间件的定义原理，那多层的函数嵌套和串联，需要极强逻辑思维能力才能完全消化吸收。不过我会多罗嗦几句，所以不用担心。</p>
+<span id="more"></span>
+
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><p>例子是官方的例子real-world，做的是一个获取github用户、仓库的程序。</p>
+<p><img src="/css/images/153.jpg"></p>
+<p>本例子源代码：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/lewis617/react-redux-tutorialt/tree/master/redux-examples/real-world">https://github.com/lewis617/react-redux-tutorialt/tree/master/redux-examples/real-world</a></p>
+<h1 id="Redux中间件就是个嵌套函数"><a href="#Redux中间件就是个嵌套函数" class="headerlink" title="Redux中间件就是个嵌套函数"></a>Redux中间件就是个嵌套函数</h1><p>Redux中间一共嵌套了三层函数，分别传递了<code>store</code>、<code>next</code>、<code>action</code>这三个参数。是不是想到了函数式编程中的柯里化？</p>
+<p>为什么要嵌套函数？为何不在一层函数中传递三个参数，而要在一层函数中传递一个参数，一共传递三层？因为中间件是要多个首尾相连的，对<code>next</code>进行一层层的”加工”，所以<code>next</code>必须独立一层。那么<code>store</code>和<code>action</code>呢？<code>store</code>的话，我们要在中间件顶层放上<code>store</code>，因为我们要用<code>store</code>的<code>dispatch</code>和<code>getState</code>两个方法。<code>action</code>的话，是因为我们封装了这么多层，其实就是为了作出更高级的<code>dispatch</code>方法，但是在高级也是<code>dispatch</code>，是<code>dispatch</code>，就得接受<code>action</code>这个参数。</p>
+<p>看我们例子中的代码：</p>
+<p>middleware&#x2F;api.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A Redux middleware that interprets actions with CALL_API info specified.</span></span><br><span class="line"><span class="comment">// Performs the call and promises when such actions are dispatched.</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store =&gt; <span class="function"><span class="params">next</span> =&gt;</span> <span class="function"><span class="params">action</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> callAPI = action[<span class="variable constant_">CALL_API</span>]</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> callAPI === <span class="string">&#x27;undefined&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">next</span>(action)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> &#123; endpoint &#125; = callAPI</span><br><span class="line">  <span class="keyword">const</span> &#123; schema, types &#125; = callAPI</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> endpoint === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">    endpoint = <span class="title function_">endpoint</span>(store.<span class="title function_">getState</span>())</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> endpoint !== <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Specify a string endpoint URL.&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!schema) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Specify one of the exported Schemas.&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="title class_">Array</span>.<span class="title function_">isArray</span>(types) || types.<span class="property">length</span> !== <span class="number">3</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Expected an array of three action types.&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!types.<span class="title function_">every</span>(<span class="function"><span class="params">type</span> =&gt;</span> <span class="keyword">typeof</span> type === <span class="string">&#x27;string&#x27;</span>)) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Expected action types to be strings.&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">actionWith</span>(<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> finalAction = <span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;&#125;, action, data)</span><br><span class="line">    <span class="keyword">delete</span> finalAction[<span class="variable constant_">CALL_API</span>]</span><br><span class="line">    <span class="keyword">return</span> finalAction</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> [ requestType, successType, failureType ] = types</span><br><span class="line">  <span class="title function_">next</span>(<span class="title function_">actionWith</span>(&#123; <span class="attr">type</span>: requestType &#125;))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">callApi</span>(endpoint, schema).<span class="title function_">then</span>(</span><br><span class="line">    <span class="function"><span class="params">response</span> =&gt;</span> <span class="title function_">next</span>(<span class="title function_">actionWith</span>(&#123;</span><br><span class="line">      response,</span><br><span class="line">      <span class="attr">type</span>: successType</span><br><span class="line">    &#125;)),</span><br><span class="line">    <span class="function"><span class="params">error</span> =&gt;</span> <span class="title function_">next</span>(<span class="title function_">actionWith</span>(&#123;</span><br><span class="line">      <span class="attr">type</span>: failureType,</span><br><span class="line">      <span class="attr">error</span>: error.<span class="property">message</span> || <span class="string">&#x27;Something bad happened&#x27;</span></span><br><span class="line">    &#125;))</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例子中，我们用<code>store =&gt; next =&gt; action =&gt;</code>实现了三层函数嵌套。箭头语法很好的代替了丑陋的function嵌套方法。最后指向的那个{}里面，我们就可以写关于<code>dispatch</code>的装饰了，不过记得返回<code>next</code>，给下一个中间件使用。</p>
+<h1 id="中间件的执行"><a href="#中间件的执行" class="headerlink" title="中间件的执行"></a>中间件的执行</h1><p>嵌套函数也是函数，是函数就要运行。我们知道，js里面，我们用<code>()</code>来执行一个函数。那么三层嵌套函数我们要怎么执行呢？写三个<code>()</code>呗！<code>aaa()()()</code>就可以了。<code>aaa()</code>返回了一个函数，<code>aaa()()</code>又返回一个函数，<code>aaa()()()</code>终于执行完成。</p>
+<p>我们来看下，我们编写的中间件是怎么运行的。首先中间件的使用是在<code>configStore</code>里面的<code>applyMiddleware</code>里面写的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">applyMiddleware</span>(thunk, api)</span><br></pre></td></tr></table></figure>
+<p>我们看下Redux的源代码：</p>
+<p>node_modules&#x2F;redux&#x2F;src&#x2F;applyMiddleware.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">applyMiddleware</span>(<span class="params">...middlewares</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">createStore</span>) =&gt;</span> <span class="function">(<span class="params">reducer, initialState, enhancer</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> store = <span class="title function_">createStore</span>(reducer, initialState, enhancer)</span><br><span class="line">    <span class="keyword">var</span> dispatch = store.<span class="property">dispatch</span></span><br><span class="line">    <span class="keyword">var</span> chain = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> middlewareAPI = &#123;</span><br><span class="line">      <span class="attr">getState</span>: store.<span class="property">getState</span>,</span><br><span class="line">      <span class="attr">dispatch</span>: <span class="function">(<span class="params">action</span>) =&gt;</span> <span class="title function_">dispatch</span>(action)</span><br><span class="line">    &#125;</span><br><span class="line">    chain = middlewares.<span class="title function_">map</span>(<span class="function"><span class="params">middleware</span> =&gt;</span> <span class="title function_">middleware</span>(middlewareAPI))</span><br><span class="line">    dispatch = <span class="title function_">compose</span>(...chain)(store.<span class="property">dispatch</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      ...store,</span><br><span class="line">      dispatch</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好短好开心！不过看起来还是挺复杂的，不用担心，不就是个三层嵌套函数嘛，我们先找最外层的执行代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chain = middlewares.<span class="title function_">map</span>(<span class="function"><span class="params">middleware</span> =&gt;</span> <span class="title function_">middleware</span>(middlewareAPI))</span><br></pre></td></tr></table></figure>
+
+<p><code>middlewares</code>使用展开语法，将我们写进去的中间件，生成一个中间件数组。遍历每个中间件，在中间件最外层执行第一次，也就是参数为<code>store</code>那一次。我们发现<code>store</code>是<code>middlewareAPI</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> middlewareAPI = &#123;</span><br><span class="line">  <span class="attr">getState</span>: store.<span class="property">getState</span>,</span><br><span class="line">  <span class="attr">dispatch</span>: <span class="function">(<span class="params">action</span>) =&gt;</span> <span class="title function_">dispatch</span>(action)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是个对象，包含了我们需要的两个方法，这就够了。</p>
+<p>好了，我们开始寻找第二层函数的执行代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dispatch = <span class="title function_">compose</span>(...chain)(store.<span class="property">dispatch</span>)</span><br></pre></td></tr></table></figure>
+<p>这是什么鬼？<code>compose</code>是种函数嵌套的写法，源代码清单就不展示了，我们知道它可以帮我们将嵌套的函数，写成逗号隔开的样子就可以了。有点类似Promise解决回调地狱的做法。都是将嵌套写成平行的样子。</p>
+<p><code>chain</code>就是我们的第二层函数，…就是展开语法，用逗号隔开放进<code>compose</code>参数里。后面那个<code>(store.dispatch)</code>就是入口参数。是个未经任何加工的<code>dispatch</code>，这个可怜的家伙进去后，将被我们的中间件层层加工，经历风雨，变成更加牛逼的<code>dispatch</code>。</p>
+<p>第三层函数的执行代码在哪？不在这里面，因为到了第三层函数，就是新的<code>dispatch</code>了，我们要在组件里面使用它，所以第三层函数的执行在组件中。参数是什么？当然是可爱的<code>action</code>啊！</p>
+<h1 id="中间件的连接"><a href="#中间件的连接" class="headerlink" title="中间件的连接"></a>中间件的连接</h1><p>我们知道，中间件是可以首尾相连使用的，那么我们如何实现首尾相连？答案就在<code>next()</code>，写过express中间件的同学对它一定不陌生。那么Redux中间件的<code>next()</code>是个什么鬼？也是个<code>dispatch</code>。</p>
+<p>我们写中间件时候，一定要写<code>next()</code>，当前中间件对<code>dispatch</code>加工后返回给后面的中间件继续加工。这也是为什么中间件的顺序有讲究的原因。</p>
+<h1 id="解读例子中的中间件的业务流程"><a href="#解读例子中的中间件的业务流程" class="headerlink" title="解读例子中的中间件的业务流程"></a>解读例子中的中间件的业务流程</h1><p>中间件的原理讲完了，我们来走一遍例子中的中间件业务流程吧！</p>
+<h2 id="获取指定action"><a href="#获取指定action" class="headerlink" title="获取指定action"></a>获取指定action</h2><p>我们在定义action的时候，在<code>fetchUser</code>等函数中返回了这些我们需要的东西：</p>
+<p>actions&#x2F;index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">CALL_API</span>, <span class="title class_">Schemas</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../middleware/api&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="variable constant_">USER_REQUEST</span> = <span class="string">&#x27;USER_REQUEST&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="variable constant_">USER_SUCCESS</span> = <span class="string">&#x27;USER_SUCCESS&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="variable constant_">USER_FAILURE</span> = <span class="string">&#x27;USER_FAILURE&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Fetches a single user from Github API.</span></span><br><span class="line"><span class="comment">// Relies on the custom API middleware defined in ../middleware/api.js.</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fetchUser</span>(<span class="params">login</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    [<span class="variable constant_">CALL_API</span>]: &#123;</span><br><span class="line">      <span class="attr">types</span>: [ <span class="variable constant_">USER_REQUEST</span>, <span class="variable constant_">USER_SUCCESS</span>, <span class="variable constant_">USER_FAILURE</span> ],</span><br><span class="line">      <span class="attr">endpoint</span>: <span class="string">`users/<span class="subst">$&#123;login&#125;</span>`</span>,</span><br><span class="line">      <span class="attr">schema</span>: <span class="title class_">Schemas</span>.<span class="property">USER</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Fetches a single user from Github API unless it is cached.</span></span><br><span class="line"><span class="comment">// Relies on Redux Thunk middleware.</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">loadUser</span>(<span class="params">login, requiredFields = []</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">dispatch, getState</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="title function_">getState</span>().<span class="property">entities</span>.<span class="property">users</span>[login]</span><br><span class="line">    <span class="keyword">if</span> (user &amp;&amp; requiredFields.<span class="title function_">every</span>(<span class="function"><span class="params">key</span> =&gt;</span> user.<span class="title function_">hasOwnProperty</span>(key))) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">dispatch</span>(<span class="title function_">fetchUser</span>(login))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们也就是指定这些action来进行”包装的”。除了<code>fetchUser</code>，还有其他的，不列出代码清单了。</p>
+<p>我们添加<code>console.log</code>来查看action的真正样子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;当前执行的action:&#x27;</span>,action);</span><br><span class="line"><span class="keyword">const</span> callAPI = action[<span class="variable constant_">CALL_API</span>]</span><br></pre></td></tr></table></figure>
+<p><img src="/css/images/154.jpg"></p>
+<p>在执行initRoutes的action时候，我们得到了一个包含Symbol的action对象，这就是我们想要的action。</p>
+<h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p>Symbol是什么？上述代码中的<code>CALL_API</code>就是Symbol。</p>
+<p>middleware&#x2F;api.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Action key that carries API call info interpreted by this Redux middleware.</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="variable constant_">CALL_API</span> = <span class="title class_">Symbol</span>(<span class="string">&#x27;Call API&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>为什么要用Symbol，为了不冲突，Symbol是个唯一的不变的标识，可以用于对象的key。为了避免冲突而生，这里也可以用字符串来代替，但是不好，<br>因为字符串很容易命名冲突，你每次都要想个奇葩的长名字，所以还是用Symbol吧。再罗嗦一句，我们写Object.assign的时候，<br>第一个参数设为{},第二个参数设为源，第三个参数设为拓展属性的写法，就是为了兼容包含Symbol的对象。</p>
+<h2 id="消毒"><a href="#消毒" class="headerlink" title="消毒"></a>消毒</h2><p>获取到指定的action后，我们要做一系列的异常处理：</p>
+<p>middleware&#x2F;api.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> endpoint === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">endpoint = <span class="title function_">endpoint</span>(store.<span class="title function_">getState</span>())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> endpoint !== <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Specify a string endpoint URL.&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!schema) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Specify one of the exported Schemas.&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!<span class="title class_">Array</span>.<span class="title function_">isArray</span>(types) || types.<span class="property">length</span> !== <span class="number">3</span>) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Expected an array of three action types.&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!types.<span class="title function_">every</span>(<span class="function"><span class="params">type</span> =&gt;</span> <span class="keyword">typeof</span> type === <span class="string">&#x27;string&#x27;</span>)) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Expected action types to be strings.&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>比较简单，不罗嗦了。</p>
+<h2 id="执行请求action"><a href="#执行请求action" class="headerlink" title="执行请求action"></a>执行请求action</h2><p>获取完action，也进行过消毒了，可以开始ajax请求了，首先发一个请求action</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line"><span class="keyword">function</span> <span class="title function_">actionWith</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> finalAction = <span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;&#125;, action, data)</span><br><span class="line">  <span class="keyword">delete</span> finalAction[<span class="variable constant_">CALL_API</span>]</span><br><span class="line">  <span class="keyword">return</span> finalAction</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [ requestType, successType, failureType ] = types</span><br><span class="line"><span class="title function_">next</span>(<span class="title function_">actionWith</span>(&#123; <span class="attr">type</span>: requestType &#125;))</span><br><span class="line"></span><br><span class="line"><span class="string">``</span><span class="string">`   </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## 执行ajax请求，结束后发出成功或者失败action</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">    </span><br><span class="line"><span class="keyword">return</span> <span class="title function_">callApi</span>(endpoint, schema).<span class="title function_">then</span>(</span><br><span class="line">	<span class="function"><span class="params">response</span> =&gt;</span> <span class="title function_">next</span>(<span class="title function_">actionWith</span>(&#123;</span><br><span class="line">	  response,</span><br><span class="line">	  <span class="attr">type</span>: successType</span><br><span class="line">	&#125;)),</span><br><span class="line">	<span class="function"><span class="params">error</span> =&gt;</span> <span class="title function_">next</span>(<span class="title function_">actionWith</span>(&#123;</span><br><span class="line">	  <span class="attr">type</span>: failureType,</span><br><span class="line">	  <span class="attr">error</span>: error.<span class="property">message</span> || <span class="string">&#x27;Something bad happened&#x27;</span></span><br><span class="line">	&#125;))</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<h2 id="图解流程"><a href="#图解流程" class="headerlink" title="图解流程"></a>图解流程</h2><p>本来一个action，经过中间件的加工后，变成了一系列的流程。</p>
+<p><img src="/css/images/155.jpg"></p>
+<hr>
+<h1 id="教程示例代码及目录"><a href="#教程示例代码及目录" class="headerlink" title="教程示例代码及目录"></a>教程示例代码及目录</h1><p><a href="https://lewis617.github.io/2016/12/10/react-redux-tutorial-catalog/">https://lewis617.github.io/2016/12/10/react-redux-tutorial-catalog/</a></p>
+
+        
+          <!-- 版权声明节点 -->
+<div class="copyright">
+  <div>
+    <strong>本文作者：</strong>
+    <a href="/about/" title="欢迎访问  的博客">
+      
+    </a>
+  </div>
+  <div>
+    <strong>本文出处：</strong>
+    <a href="/" title="刘一奇的个人博客">
+      刘一奇的个人博客
+    </a>
+  </div>
+  <div>
+    <strong>本文链接：</strong>
+    <a href="https://lewis617.github.io/2016/02/02/r2-middleware/" title="React 与 Redux 教程（七）自定义Redux中间件">
+          https://lewis617.github.io/2016/02/02/r2-middleware/
+        </a>
+  </div>
+  <div>
+    <strong>发布时间：</strong>
+    2016年2月2日 - 08时02分
+  </div>
+  <div>
+    <strong>版权声明： </strong> 本文由
+     原创，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="license" target="_blank">保留署名-非商业性使用-禁止演绎 4.0-国际许可协议</a> </br>转载请保留以上声明信息！
+  </div>
+</div>
+          
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://lewis617.github.io/2016/02/02/r2-middleware/" data-id="cml0n0t79008cvoj65ofo82bq" class="article-share-link">共享</a>
+      <!-- 
+        <a href="https://lewis617.github.io/2016/02/02/r2-middleware/#disqus_proxy_thread" class="article-comment-link">留言</a>
+       -->
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/02/03/r2-database/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          React 与 Redux 教程（八）连接数据库的Redux程序
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/02/01/r2-ssr/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">React 与 Redux 教程（六）redux服务端渲染流程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- 
+  <section id="comments">
+    <div id="disqus_thread"></div>
+    <div id="disqus_proxy_thread"></div>
+  </section>
+  <script>
+    window.disqusProxy = {
+      shortname: 'lewis617s-blog',
+      username: 'lewis617',
+      server: 'disqus-proxy.herokuapp.com',
+      adminAvatar: '/css/images/1556699732171-0.jpg',
+      identifier: '2016/02/02/r2-middleware/',
+    };
+    window.disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.disqusProxy.identifier;
+    };
+  </script>
+ -->
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">系列文章</h3>
+  <div class="widget">
+    <ul>
+      <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/liu-yi-si-15-89/posts">前端智能化系列教程</a></li>
+      <li><a href="/tags/React/">React 与 Redux 系列教程</a></li>
+      <li><a href="/tags/Angular2/">Angular2 系列教程</a></li>
+      <li><a href="/tags/数据结构与算法/">JavaScript 版数据结构与算法</a></li>
+      <li><a href="/tags/测试/">前端测试系列教程</a></li>
+      <li><a href="/tags/技术讲座/">技术讲座中文字幕集合</a></li> 
+      <li><a href="/tags/JavaScript-基础/">JavaScript 基础</a></li> 
+      <li><a href="/tags/CSS-基础/">CSS 基础</a></li> 
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Angular/" style="font-size: 12px;">Angular</a> <a href="/tags/Angular2/" style="font-size: 17px;">Angular2</a> <a href="/tags/Appium/" style="font-size: 11px;">Appium</a> <a href="/tags/BFC/" style="font-size: 10px;">BFC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Bootstrap/" style="font-size: 10px;">Bootstrap</a> <a href="/tags/CSS-%E5%9F%BA%E7%A1%80/" style="font-size: 12px;">CSS 基础</a> <a href="/tags/Clojure/" style="font-size: 10px;">Clojure</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Fitbit/" style="font-size: 10px;">Fitbit</a> <a href="/tags/Flask/" style="font-size: 11px;">Flask</a> <a href="/tags/Gulp/" style="font-size: 10px;">Gulp</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/Immutable-js/" style="font-size: 10px;">Immutable.js</a> <a href="/tags/JS-%E8%B0%83%E8%AF%95/" style="font-size: 10px;">JS 调试</a> <a href="/tags/JSX/" style="font-size: 10px;">JSX</a> <a href="/tags/JavaScript-%E5%9F%BA%E7%A1%80/" style="font-size: 14px;">JavaScript 基础</a> <a href="/tags/Jest/" style="font-size: 11px;">Jest</a> <a href="/tags/Jinja2/" style="font-size: 10px;">Jinja2</a> <a href="/tags/Karma/" style="font-size: 11px;">Karma</a> <a href="/tags/LeetCode/" style="font-size: 14px;">LeetCode</a> <a href="/tags/Miri-%E5%83%B5%E5%B0%B8%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">Miri 僵尸网络</a> <a href="/tags/Mori/" style="font-size: 10px;">Mori</a> <a href="/tags/Node/" style="font-size: 11px;">Node</a> <a href="/tags/Object-Detection-API/" style="font-size: 10px;">Object Detection API</a> <a href="/tags/Preact/" style="font-size: 10px;">Preact</a> <a href="/tags/Puppeteer/" style="font-size: 12px;">Puppeteer</a> <a href="/tags/React/" style="font-size: 19px;">React</a> <a href="/tags/Redux/" style="font-size: 18px;">Redux</a> <a href="/tags/Reflux/" style="font-size: 10px;">Reflux</a> <a href="/tags/RequireJs/" style="font-size: 13px;">RequireJs</a> <a href="/tags/RxJS/" style="font-size: 11px;">RxJS</a> <a href="/tags/SVG/" style="font-size: 10px;">SVG</a> <a href="/tags/SVG-SMIL-animation/" style="font-size: 10px;">SVG SMIL animation</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/Trie-%E6%A0%91/" style="font-size: 10px;">Trie 树</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Universal/" style="font-size: 10px;">Universal</a> <a href="/tags/Webpack/" style="font-size: 11px;">Webpack</a> <a href="/tags/cheerio/" style="font-size: 10px;">cheerio</a> <a href="/tags/debounce/" style="font-size: 10px;">debounce</a> <a href="/tags/e2e/" style="font-size: 12px;">e2e</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/left-pad/" style="font-size: 10px;">left-pad</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/practical-js/" style="font-size: 11px;">practical-js</a> <a href="/tags/r-js/" style="font-size: 10px;">r.js</a> <a href="/tags/redux-amrc/" style="font-size: 10px;">redux-amrc</a> <a href="/tags/render-react-components/" style="font-size: 10px;">render-react-components</a> <a href="/tags/superagent/" style="font-size: 10px;">superagent</a> <a href="/tags/throttle/" style="font-size: 10px;">throttle</a> <a href="/tags/%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">不可变数据结构</a> <a href="/tags/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" style="font-size: 10px;">事件循环</a> <a href="/tags/%E4%BA%8C%E5%80%BC%E5%8C%96/" style="font-size: 10px;">二值化</a> <a href="/tags/%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" style="font-size: 10px;">任务队列</a> <a href="/tags/%E4%BC%A6%E7%90%86%E5%AD%A6/" style="font-size: 10px;">伦理学</a> <a href="/tags/%E5%81%8F%E7%A7%BB%E5%AE%BD%E9%AB%98%E8%B7%9D%E7%A6%BB/" style="font-size: 10px;">偏移宽高距离</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11px;">函数式编程</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E4%BD%93%E7%B3%BB/" style="font-size: 10px;">前端体系</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">前端面试</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 14px;">单元测试</a> <a href="/tags/%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">原型继承</a> <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/" style="font-size: 10px;">原型链</a> <a href="/tags/%E5%8F%AF%E8%A7%86%E5%AE%BD%E9%AB%98/" style="font-size: 10px;">可视宽高</a> <a href="/tags/%E5%9B%BE%E4%B9%A6/" style="font-size: 10px;">图书</a> <a href="/tags/%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0/" style="font-size: 10px;">块级元素</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 10px;">字符编码</a> <a href="/tags/%E5%AE%8F%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">宏任务</a> <a href="/tags/%E5%AF%84%E7%94%9F%E5%BC%8F%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">寄生式组合继承</a> <a href="/tags/%E5%BE%AE%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">微任务</a> <a href="/tags/%E6%80%A7%E8%83%BD/" style="font-size: 10px;">性能</a> <a href="/tags/%E6%89%A7%E8%A1%8C%E6%A0%88/" style="font-size: 10px;">执行栈</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E8%AE%B2%E5%BA%A7/" style="font-size: 15px;">技术讲座</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" style="font-size: 20px;">数据结构与算法</a> <a href="/tags/%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0/" style="font-size: 10px;">替换元素</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">机器学习</a> <a href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">构造函数继承</a> <a href="/tags/%E6%9F%AF%E9%87%8C%E5%8C%96/" style="font-size: 10px;">柯里化</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 11px;">正则表达式</a> <a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 16px;">测试</a> <a href="/tags/%E6%BB%9A%E5%8A%A8%E5%AE%BD%E9%AB%98%E8%B7%9D%E7%A6%BB/" style="font-size: 10px;">滚动宽高距离</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" style="font-size: 10px;">物联网</a> <a href="/tags/%E7%94%B5%E8%BD%A6%E9%97%AE%E9%A2%98/" style="font-size: 10px;">电车问题</a> <a href="/tags/%E7%9C%81%E7%95%A5%E5%8F%B7/" style="font-size: 10px;">省略号</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%AB%AF%E5%AF%B9%E7%AB%AF%E6%B5%8B%E8%AF%95/" style="font-size: 12px;">端对端测试</a> <a href="/tags/%E7%BA%AF%E5%87%BD%E6%95%B0/" style="font-size: 10px;">纯函数</a> <a href="/tags/%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">组合继承</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" style="font-size: 11px;">自动化测试</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E6%B1%BD%E8%BD%A6/" style="font-size: 10px;">自动驾驶汽车</a> <a href="/tags/%E8%99%9A%E6%8B%9FDOM/" style="font-size: 10px;">虚拟DOM</a> <a href="/tags/%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0/" style="font-size: 10px;">行内元素</a> <a href="/tags/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" style="font-size: 10px;">贝塞尔曲线</a> <a href="/tags/%E8%B7%A8%E5%9F%9F/" style="font-size: 10px;">跨域</a> <a href="/tags/%E9%9D%9E%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0/" style="font-size: 10px;">非替换元素</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">面向对象编程</a> <a href="/tags/%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">黑盒测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/18/fe-kg/">“真”前端知识图谱上线了</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-async/">JavaScript 基础：异步</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-inherit/">JavaScript 基础：继承</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-debounce-throttle/">JavaScript 基础：防抖与节流</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-top-left-width-height/">JavaScript 基础：偏移宽高距离、滚动宽高距离、可视宽高</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+	<h3 class="widget-title">我的其他小站</h3>
+	<div class="widget">
+		<ul>
+			<li><a href="/scroll-pages" target="_blank">滚动吉他谱</a></li>
+			<li><a href="/books-tree" target="_blank">技术书籍可视化</a></li>
+			<li><a href="/fe-kg" target="_blank">前端知识图谱</a></li>
+		</ul>
+	</div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+	
+	<div class="outer">
+		<div id="footer-info" class="inner">
+      &copy; 2026 刘一奇
+		</div>
+	</div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于我</a>
+  
+</nav>
+    <script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/blockies-identicon@0.1.0/blockies.min.js"></script>
+<!-- <script src="/js/jquery-disqus-proxy.js?v=0.1.1"></script> -->
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-88398388-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+</body>
+</html>

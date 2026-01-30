@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RxJS + Redux + React = Amazing!（译一） | 刘一奇的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="google-site-verification" content="pGU1zAlgx4MyYfhiix_1nJzPw60bF-dscJn6KBIm7dU" />
+  <meta name="description" content="今天，我将Youtube上的《RxJS + Redux + React &#x3D; Amazing!》翻译（+机译）了下来，以供国内的同学学习，英文听力好的同学可以直接看原版视频： https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;AslncyG8whg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJS + Redux + React &#x3D; Amazing!（译一）">
+<meta property="og:url" content="https://lewis617.github.io/2016/12/08/rxjs-redux-react-amazing-1/index.html">
+<meta property="og:site_name" content="刘一奇的个人博客">
+<meta property="og:description" content="今天，我将Youtube上的《RxJS + Redux + React &#x3D; Amazing!》翻译（+机译）了下来，以供国内的同学学习，英文听力好的同学可以直接看原版视频： https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;AslncyG8whg">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lewis617.github.io/css/images/173.jpg">
+<meta property="og:image" content="https://lewis617.github.io/css/images/174.jpg">
+<meta property="og:image" content="https://lewis617.github.io/css/images/175.jpg">
+<meta property="og:image" content="https://lewis617.github.io/css/images/176.jpg">
+<meta property="og:image" content="https://lewis617.github.io/css/images/177.jpg">
+<meta property="article:published_time" content="2016-12-08T02:37:00.000Z">
+<meta property="article:modified_time" content="2026-01-19T13:34:16.248Z">
+<meta property="article:author" content="刘一奇">
+<meta property="article:tag" content="技术讲座">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Redux">
+<meta property="article:tag" content="RxJS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lewis617.github.io/css/images/173.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="刘一奇的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- <link rel="stylesheet" href="/css/jquery-disqus-proxy.css"/> -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">刘一奇的个人博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于我</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://lewis617.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-rxjs-redux-react-amazing-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/08/rxjs-redux-react-amazing-1/" class="article-date">
+  <time datetime="2016-12-08T02:37:00.000Z" itemprop="datePublished">2016-12-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RxJS + Redux + React = Amazing!（译一）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天，我将Youtube上的《RxJS + Redux + React &#x3D; Amazing!》翻译（+机译）了下来，以供国内的同学学习，英文听力好的同学可以直接看原版视频：</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=AslncyG8whg">https://www.youtube.com/watch?v=AslncyG8whg</a></p>
+<span id="more"></span>
+
+<h2 id="开场白"><a href="#开场白" class="headerlink" title="开场白"></a>开场白</h2><p>管理状态很困难，对吧？如果你写过复杂应用，你一定对此深恶痛绝。React社区还有Angular2社区和Ember社区现在都开始使用一个库，叫Redux。为什么？因为它让管理状态变得简单多了。但Redux有个问题，就是它对你写异步代码没什么帮助，因为Redux认为异步是个比管理状态更难的问题。特别是当你试图去解决一些复杂问题，比如：并行或多重WebSockets。这些问题本身就很复杂，你也没辙。所以，这次演说将会介绍使用另一个库，叫RxJS。这个库至少可以让异步问题变得可控可管理，至少可以让你知道发生了什么。</p>
+<p><img src="/css/images/173.jpg"></p>
+<h2 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h2><p>我是谁？我是Jay Phelps。很明显，照片中的衬衫不是我今天穿的，尽管它们很像，（歪果仁就是啰嗦，不过场下听众听到这都乐了）。其实我穿了另外一件蓝色衬衫，但这是我的推特头像，它可以帮助那些还没有认出我的人认出我来。很明显，我是Netflix的软件工程师。你可以关注我，通过下划线jayphelps（就是_jayphelps，然后他又扯了一些没用的，说有另外一个jayphelps，是一个16岁的家伙，经常转推一些足球图片。他说他经常说这个梗，因为很多本来要关注他的人，都去关注那个16岁足球小哥了）。</p>
+<p><img src="/css/images/174.jpg"></p>
+<h2 id="什么是Redux"><a href="#什么是Redux" class="headerlink" title="什么是Redux"></a>什么是Redux</h2><p>让我们开始讨论什么是Redux。这个演说不会详细介绍Redux和RxJS，因为它们本身就有非常多相关的演说，但我会给你们一个速成教程。这样，即便你不知道它们具体是什么，至少可以了解个大概。Redux提供了一个可预测的状态管理，它通过action和reducer来完成这个工作。那么什么是action？action被用来描述发生的事，但它不关心如何这件事如何发生。让我们来看个例子吧！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;CREATE_TODO&quot;</span>,</span><br><span class="line">  <span class="attr">payload</span>: <span class="string">&quot;Build my first redux app&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是个简单的action，通过这个action，你知道了你要去创建一个todo，这个todo的内容是什么，但它没说如何去创建这个todo，它没说是是否要与服务器交互，也没说是否要存到数据库或localstorage中，它没有进行异步操作，它是个完全可以被序列化的对象。那么什么是reducer？reducer是一些纯函数，这意味着每次你给了一样的输入，那么就会有一样的输出，没有副作用。reducer的具体功能是输入上个的state和action，然后输出新的state，当然新的state可以和上个state完全一样（就是case为default的情况）。举个非真实场景的例子吧，这是个计数器的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">counter</span>(<span class="params">state = <span class="number">0</span>, action</span>) &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.<span class="property">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="attr">INCREMENT_COUNTER</span>:</span><br><span class="line">      <span class="keyword">return</span> state + <span class="number">1</span></span><br><span class="line">    <span class="keyword">case</span> <span class="attr">DECREMENT_COUNTER</span>:</span><br><span class="line">      <span class="keyword">return</span> state - <span class="number">1</span></span><br><span class="line">    <span class="attr">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们仅仅就是选择action类型，当action是加一，state就加一，action是减一，state就减一，就是这么字面性质的工作。reducer负责state更新，但它必须是同步的。这意味着，如果reducer收到加一的action，那么就必须立马加一。reducer不能去除速率过快的事件（debounce），也不能和服务器交互，也不能问“我是否可以加一“。reducer只能受到action，然后立马同步执行。</p>
+<p><img src="/css/images/175.jpg"></p>
+<h2 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h2><p>我们平时都做些什么类型的异步操作呢？（竟然没有衔接，直接从Redux转折到异步）为何说异步是个难缠的问题呢？常见的异步事件操作包括：</p>
+<ul>
+<li>用户交互（键盘、鼠标）</li>
+<li>Ajax（这就像面包和黄油一样熟悉，我们每个人都会做Ajax请求）</li>
+<li>计时器／动画</li>
+<li>Web Sockets </li>
+<li>Web Workers</li>
+</ul>
+<p>这不是个详细的列表。上述其中一些可以同步处理，尽管它们本身是异步的。React 与 Redux 已经封装好了，你可以直接同步处理它们！（然后，他举了一个例子，React组件的点击事件，可以触发加一的action，然后reducer处理这个action）从技术角度上来说，这些事件是异步的，但你可以用同步的方式来处理它。为什么？因为React已经帮你处理了异步。但是，问题来了，如果你还想要点击，如果你想去除速率过快的事件，比如，用户点了很多次，而你不想每次都进行事件处理。这时，你通常会计算点击间隔，然后只处理间隔较大的点击事件。有时候，你需要像这样的更多的控制。这些控制包括：</p>
+<ul>
+<li>Ajax取消／组合（组合的意思是，比如你发起了一个Ajax，然后你又发起了另外一个Ajax，后一个的发起用到了前一个的响应数据）</li>
+<li>Debounce／throttle／buffer等这些与时间相关的操作</li>
+<li>Drag and Drop </li>
+<li>Web Sockets, Web Workers, etc</li>
+</ul>
+<p>在Redux世界里，人们经常使用中间件来处理这些操作。所有action在你发起后，和到达reducer前，都必须穿过中间件。现在已经有很多中间件使用回调和Promise来做这些事了（指那些复杂的异步操作）。下面就让我们看看这两种最常用的异步处理方法吧！</p>
+<p><img src="/css/images/176.jpg"></p>
+<h2 id="回调和Promise"><a href="#回调和Promise" class="headerlink" title="回调和Promise"></a>回调和Promise</h2><p>回调对大家来说非常熟悉，因为它是JavaScript最原始的处理异步的方式（然后他举了个回调的例子，回调太简单，不再赘述）。但是回调有很多问题，其中最常见的就是“回调地狱“。大家几乎都见过这种代码（他指着屏幕上的代码示例）。如果你想改变代码，比如做点这样的事：</p>
+<ul>
+<li>条件判断，然后决定是否进行下一个异步</li>
+<li>你不想顺序执行这些异步</li>
+<li>更加复杂的回调操作，比如你想并发它们等</li>
+</ul>
+<p>那么事情就变得非常复杂了，对吧？我的同事称回调地狱是“V型电吉他“，因为它们的形状非常相似。不过，有了一种解决方案，叫Promise。使用Promise有个绝招，那就是如果你给Promise提供了一个回调，这个回调也返回了一个Promise，那么你可以将其写为平行的风格（这算什么绝招啊，大多数人都知道吧！）。如果你理解了这种模式，那么Promise的代码将会变得非常易读。这很棒，它是个非常好的候选方案。让我们更深入的了解一下Promise吧！Promise拥有这些特性：</p>
+<ul>
+<li>被保证的未来（意思是，一旦你创建了一个Promise，那么它肯定会执行它要做的事情，你不能停止它，开始黑Promise了。）</li>
+<li>不可变</li>
+<li>单一的值（意思是，如果你监听一个Promise很多次，你只会得到相同的值，而不是执行多次请求 ）</li>
+<li>缓存</li>
+</ul>
+<p>在真实项目中，你会发现“被保证的未来“和“单一的值“是个问题，先说“被保证的未来“吧，Promise是不能被取消的。或许你会问，我既然创建了一个Promise，为何要取消它？以下场景，你就要取消你的Promise，也就是异步请求：</p>
+<ul>
+<li>改变路由／视图（他举了Netflix的一个例子，大概就是点进一个页面，然后后悔了就返回了，这时需要取消请求）</li>
+<li>自动补全（这个例子比较常见，自动补全总不能每次键盘按下都发请求吧？）</li>
+<li>用户非要你取消</li>
+</ul>
+<p>可见，取消异步是一个非常常用，但是容易被忽略的需求。再说Promise的“单一的值“吧！（然后开始黑Promise的“单一的值“，不过他欲扬先抑了一下），其实绝大多数场景下，我们只需要单一的值，比如Ajax，请求-响应，就是单一的值。但人们不只想做这些事，像之前提到的：</p>
+<ul>
+<li>用户交互（键盘、鼠标）</li>
+<li>Ajax（这就像面包和黄油一样熟悉，我们每个人都会做Ajax请求）</li>
+<li>计时器／动画</li>
+<li>Web Sockets </li>
+<li>Web Workers</li>
+</ul>
+<p>上述场景也就Ajax是单一的值，其他几个场景都不是。那我们该怎么办呢？那就是使用Observable！</p>
+<p><img src="/css/images/177.jpg"></p>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>这个视频太长了，今天就到此为止吧！在这篇文章中，我们主要听了Jay Phelps：</p>
+<ul>
+<li>讲了Redux和异步  </li>
+<li>黑了回调和Promise</li>
+</ul>
+<p>下篇文章我们将听他：</p>
+<ul>
+<li>吹Observable的牛</li>
+<li>讲述他和他搭档造redux-obserable这个轮子背后的故事！</li>
+</ul>
+<h2 id="教程示例代码及目录"><a href="#教程示例代码及目录" class="headerlink" title="教程示例代码及目录"></a>教程示例代码及目录</h2><p>示例代码：<a target="_blank" rel="noopener" href="https://github.com/lewis617/react-redux-tutorial">https://github.com/lewis617/react-redux-tutorial</a></p>
+<p>目录：<a href="https://lewis617.github.io/tags/React/">https://lewis617.github.io/tags/React/</a></p>
+
+        
+          <!-- 版权声明节点 -->
+<div class="copyright">
+  <div>
+    <strong>本文作者：</strong>
+    <a href="/about/" title="欢迎访问  的博客">
+      
+    </a>
+  </div>
+  <div>
+    <strong>本文出处：</strong>
+    <a href="/" title="刘一奇的个人博客">
+      刘一奇的个人博客
+    </a>
+  </div>
+  <div>
+    <strong>本文链接：</strong>
+    <a href="https://lewis617.github.io/2016/12/08/rxjs-redux-react-amazing-1/" title="RxJS + Redux + React = Amazing!（译一）">
+          https://lewis617.github.io/2016/12/08/rxjs-redux-react-amazing-1/
+        </a>
+  </div>
+  <div>
+    <strong>发布时间：</strong>
+    2016年12月8日 - 10时12分
+  </div>
+  <div>
+    <strong>版权声明： </strong> 本文由
+     原创，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="license" target="_blank">保留署名-非商业性使用-禁止演绎 4.0-国际许可协议</a> </br>转载请保留以上声明信息！
+  </div>
+</div>
+          
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://lewis617.github.io/2016/12/08/rxjs-redux-react-amazing-1/" data-id="cml0n0t7h0091voj60mcfeg54" class="article-share-link">共享</a>
+      <!-- 
+        <a href="https://lewis617.github.io/2016/12/08/rxjs-redux-react-amazing-1/#disqus_proxy_thread" class="article-comment-link">留言</a>
+       -->
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RxJS/" rel="tag">RxJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF%E8%AE%B2%E5%BA%A7/" rel="tag">技术讲座</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/09/rxjs-redux-react-amazing-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          RxJS + Redux + React = Amazing!（译二）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/01/redux-amrc/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">用更少的代码发起异步 action</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- 
+  <section id="comments">
+    <div id="disqus_thread"></div>
+    <div id="disqus_proxy_thread"></div>
+  </section>
+  <script>
+    window.disqusProxy = {
+      shortname: 'lewis617s-blog',
+      username: 'lewis617',
+      server: 'disqus-proxy.herokuapp.com',
+      adminAvatar: '/css/images/1556699732171-0.jpg',
+      identifier: '2016/12/08/rxjs-redux-react-amazing-1/',
+    };
+    window.disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.disqusProxy.identifier;
+    };
+  </script>
+ -->
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">系列文章</h3>
+  <div class="widget">
+    <ul>
+      <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/liu-yi-si-15-89/posts">前端智能化系列教程</a></li>
+      <li><a href="/tags/React/">React 与 Redux 系列教程</a></li>
+      <li><a href="/tags/Angular2/">Angular2 系列教程</a></li>
+      <li><a href="/tags/数据结构与算法/">JavaScript 版数据结构与算法</a></li>
+      <li><a href="/tags/测试/">前端测试系列教程</a></li>
+      <li><a href="/tags/技术讲座/">技术讲座中文字幕集合</a></li> 
+      <li><a href="/tags/JavaScript-基础/">JavaScript 基础</a></li> 
+      <li><a href="/tags/CSS-基础/">CSS 基础</a></li> 
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Angular/" style="font-size: 12px;">Angular</a> <a href="/tags/Angular2/" style="font-size: 17px;">Angular2</a> <a href="/tags/Appium/" style="font-size: 11px;">Appium</a> <a href="/tags/BFC/" style="font-size: 10px;">BFC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Bootstrap/" style="font-size: 10px;">Bootstrap</a> <a href="/tags/CSS-%E5%9F%BA%E7%A1%80/" style="font-size: 12px;">CSS 基础</a> <a href="/tags/Clojure/" style="font-size: 10px;">Clojure</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Fitbit/" style="font-size: 10px;">Fitbit</a> <a href="/tags/Flask/" style="font-size: 11px;">Flask</a> <a href="/tags/Gulp/" style="font-size: 10px;">Gulp</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/Immutable-js/" style="font-size: 10px;">Immutable.js</a> <a href="/tags/JS-%E8%B0%83%E8%AF%95/" style="font-size: 10px;">JS 调试</a> <a href="/tags/JSX/" style="font-size: 10px;">JSX</a> <a href="/tags/JavaScript-%E5%9F%BA%E7%A1%80/" style="font-size: 14px;">JavaScript 基础</a> <a href="/tags/Jest/" style="font-size: 11px;">Jest</a> <a href="/tags/Jinja2/" style="font-size: 10px;">Jinja2</a> <a href="/tags/Karma/" style="font-size: 11px;">Karma</a> <a href="/tags/LeetCode/" style="font-size: 14px;">LeetCode</a> <a href="/tags/Miri-%E5%83%B5%E5%B0%B8%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">Miri 僵尸网络</a> <a href="/tags/Mori/" style="font-size: 10px;">Mori</a> <a href="/tags/Node/" style="font-size: 11px;">Node</a> <a href="/tags/Object-Detection-API/" style="font-size: 10px;">Object Detection API</a> <a href="/tags/Preact/" style="font-size: 10px;">Preact</a> <a href="/tags/Puppeteer/" style="font-size: 12px;">Puppeteer</a> <a href="/tags/React/" style="font-size: 19px;">React</a> <a href="/tags/Redux/" style="font-size: 18px;">Redux</a> <a href="/tags/Reflux/" style="font-size: 10px;">Reflux</a> <a href="/tags/RequireJs/" style="font-size: 13px;">RequireJs</a> <a href="/tags/RxJS/" style="font-size: 11px;">RxJS</a> <a href="/tags/SVG/" style="font-size: 10px;">SVG</a> <a href="/tags/SVG-SMIL-animation/" style="font-size: 10px;">SVG SMIL animation</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/Trie-%E6%A0%91/" style="font-size: 10px;">Trie 树</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Universal/" style="font-size: 10px;">Universal</a> <a href="/tags/Webpack/" style="font-size: 11px;">Webpack</a> <a href="/tags/cheerio/" style="font-size: 10px;">cheerio</a> <a href="/tags/debounce/" style="font-size: 10px;">debounce</a> <a href="/tags/e2e/" style="font-size: 12px;">e2e</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/left-pad/" style="font-size: 10px;">left-pad</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/practical-js/" style="font-size: 11px;">practical-js</a> <a href="/tags/r-js/" style="font-size: 10px;">r.js</a> <a href="/tags/redux-amrc/" style="font-size: 10px;">redux-amrc</a> <a href="/tags/render-react-components/" style="font-size: 10px;">render-react-components</a> <a href="/tags/superagent/" style="font-size: 10px;">superagent</a> <a href="/tags/throttle/" style="font-size: 10px;">throttle</a> <a href="/tags/%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">不可变数据结构</a> <a href="/tags/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" style="font-size: 10px;">事件循环</a> <a href="/tags/%E4%BA%8C%E5%80%BC%E5%8C%96/" style="font-size: 10px;">二值化</a> <a href="/tags/%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" style="font-size: 10px;">任务队列</a> <a href="/tags/%E4%BC%A6%E7%90%86%E5%AD%A6/" style="font-size: 10px;">伦理学</a> <a href="/tags/%E5%81%8F%E7%A7%BB%E5%AE%BD%E9%AB%98%E8%B7%9D%E7%A6%BB/" style="font-size: 10px;">偏移宽高距离</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11px;">函数式编程</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E4%BD%93%E7%B3%BB/" style="font-size: 10px;">前端体系</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">前端面试</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 14px;">单元测试</a> <a href="/tags/%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">原型继承</a> <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/" style="font-size: 10px;">原型链</a> <a href="/tags/%E5%8F%AF%E8%A7%86%E5%AE%BD%E9%AB%98/" style="font-size: 10px;">可视宽高</a> <a href="/tags/%E5%9B%BE%E4%B9%A6/" style="font-size: 10px;">图书</a> <a href="/tags/%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0/" style="font-size: 10px;">块级元素</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 10px;">字符编码</a> <a href="/tags/%E5%AE%8F%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">宏任务</a> <a href="/tags/%E5%AF%84%E7%94%9F%E5%BC%8F%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">寄生式组合继承</a> <a href="/tags/%E5%BE%AE%E4%BB%BB%E5%8A%A1/" style="font-size: 10px;">微任务</a> <a href="/tags/%E6%80%A7%E8%83%BD/" style="font-size: 10px;">性能</a> <a href="/tags/%E6%89%A7%E8%A1%8C%E6%A0%88/" style="font-size: 10px;">执行栈</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E8%AE%B2%E5%BA%A7/" style="font-size: 15px;">技术讲座</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" style="font-size: 20px;">数据结构与算法</a> <a href="/tags/%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0/" style="font-size: 10px;">替换元素</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">机器学习</a> <a href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">构造函数继承</a> <a href="/tags/%E6%9F%AF%E9%87%8C%E5%8C%96/" style="font-size: 10px;">柯里化</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 11px;">正则表达式</a> <a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 16px;">测试</a> <a href="/tags/%E6%BB%9A%E5%8A%A8%E5%AE%BD%E9%AB%98%E8%B7%9D%E7%A6%BB/" style="font-size: 10px;">滚动宽高距离</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" style="font-size: 10px;">物联网</a> <a href="/tags/%E7%94%B5%E8%BD%A6%E9%97%AE%E9%A2%98/" style="font-size: 10px;">电车问题</a> <a href="/tags/%E7%9C%81%E7%95%A5%E5%8F%B7/" style="font-size: 10px;">省略号</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%AB%AF%E5%AF%B9%E7%AB%AF%E6%B5%8B%E8%AF%95/" style="font-size: 12px;">端对端测试</a> <a href="/tags/%E7%BA%AF%E5%87%BD%E6%95%B0/" style="font-size: 10px;">纯函数</a> <a href="/tags/%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF/" style="font-size: 10px;">组合继承</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" style="font-size: 11px;">自动化测试</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E6%B1%BD%E8%BD%A6/" style="font-size: 10px;">自动驾驶汽车</a> <a href="/tags/%E8%99%9A%E6%8B%9FDOM/" style="font-size: 10px;">虚拟DOM</a> <a href="/tags/%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0/" style="font-size: 10px;">行内元素</a> <a href="/tags/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" style="font-size: 10px;">贝塞尔曲线</a> <a href="/tags/%E8%B7%A8%E5%9F%9F/" style="font-size: 10px;">跨域</a> <a href="/tags/%E9%9D%9E%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0/" style="font-size: 10px;">非替换元素</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">面向对象编程</a> <a href="/tags/%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">黑盒测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/18/fe-kg/">“真”前端知识图谱上线了</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-async/">JavaScript 基础：异步</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-inherit/">JavaScript 基础：继承</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-debounce-throttle/">JavaScript 基础：防抖与节流</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js-top-left-width-height/">JavaScript 基础：偏移宽高距离、滚动宽高距离、可视宽高</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+	<h3 class="widget-title">我的其他小站</h3>
+	<div class="widget">
+		<ul>
+			<li><a href="/scroll-pages" target="_blank">滚动吉他谱</a></li>
+			<li><a href="/books-tree" target="_blank">技术书籍可视化</a></li>
+			<li><a href="/fe-kg" target="_blank">前端知识图谱</a></li>
+		</ul>
+	</div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+	
+	<div class="outer">
+		<div id="footer-info" class="inner">
+      &copy; 2026 刘一奇
+		</div>
+	</div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于我</a>
+  
+</nav>
+    <script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/blockies-identicon@0.1.0/blockies.min.js"></script>
+<!-- <script src="/js/jquery-disqus-proxy.js?v=0.1.1"></script> -->
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-88398388-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+</body>
+</html>
